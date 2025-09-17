@@ -1,0 +1,3384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS Training Manual - MA Services Group</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #EE2E24, #d32f2f);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin: 5px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .module-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 6px solid #EE2E24;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .module-card h3 {
+            color: #EE2E24;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .module-card p {
+            color: #666;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        .module-content {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+        }
+
+        .module-content.active {
+            display: block;
+        }
+
+        .module-content h2 {
+            color: #EE2E24;
+            border-bottom: 4px solid #EE2E24;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            font-weight: 400;
+        }
+
+        .section {
+            margin: 35px 0;
+            padding: 25px 0;
+        }
+
+        .section h3 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            border-left: 4px solid #00A4BD;
+            padding-left: 15px;
+        }
+
+        .section h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .key-info {
+            background: linear-gradient(135deg, #e3f2fd, #f8f9fa);
+            border-left: 5px solid #00A4BD;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .key-info h4 {
+            color: #00A4BD;
+            margin-bottom: 15px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff8e1, #fffde7);
+            border-left: 5px solid #ff9800;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 2px 10px rgba(255, 152, 0, 0.1);
+        }
+
+        .warning-box h4 {
+            color: #f57c00;
+            margin-bottom: 15px;
+        }
+
+        .danger-box {
+            background: linear-gradient(135deg, #ffebee, #fce4ec);
+            border-left: 5px solid #EE2E24;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 2px 10px rgba(238, 46, 36, 0.1);
+        }
+
+        .danger-box h4 {
+            color: #EE2E24;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #e8f5e8, #f1f8e9);
+            border-left: 5px solid #4caf50;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 2px 10px rgba(76, 175, 80, 0.1);
+        }
+
+        .success-box h4 {
+            color: #388e3c;
+            margin-bottom: 15px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .content-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #00A4BD;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .content-card h4 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .checklist {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        .checklist h4 {
+            color: #495057;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f3f4;
+            font-size: 1em;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-item::before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 12px;
+            margin-top: -2px;
+        }
+
+        .procedure-steps {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            margin: 25px 0;
+            overflow: hidden;
+        }
+
+        .step {
+            padding: 20px 25px;
+            border-bottom: 1px solid #f1f3f4;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .step:last-child {
+            border-bottom: none;
+        }
+
+        .step-number {
+            background: #EE2E24;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 0;
+            gap: 15px;
+        }
+
+        .btn {
+            background: #EE2E24;
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(238, 46, 36, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            color: #495057;
+            font-weight: 600;
+            padding: 18px 15px;
+            text-align: left;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #fff3e0 0%, #fff8e1 100%);
+            padding: 15px 20px;
+            border-left: 4px solid #ff9800;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .icon-section {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .icon {
+            font-size: 2em;
+            margin-right: 15px;
+            color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+            
+            .module-nav {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+
+            .module-content {
+                padding: 25px 20px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .toc h3 {
+            color: #495057;
+            margin-bottom: 20px;
+            border-left: 4px solid #28a745;
+            padding-left: 15px;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .toc li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #6c757d;
+        }
+
+        .toc a {
+            color: #495057;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .toc a:hover {
+            color: #d32f2f;
+        }
+
+        .start-section {
+            text-align: center;
+            margin: 40px 0;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        .start-content h2 {
+            color: #EE2E24;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .start-content p {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 35px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, #EE2E24, #d32f2f);
+            color: white;
+            padding: 20px 50px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 6px 20px rgba(238, 46, 36, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-start:hover {
+            background: linear-gradient(135deg, #d32f2f, #b71c1c);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(238, 46, 36, 0.4);
+        }
+
+        .btn-start:active {
+            transform: translateY(-1px);
+        }
+
+        .quiz-section {
+            background: linear-gradient(135deg, #e8f4f8, #f1f8fb);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            border: 1px solid #00A4BD;
+        }
+
+        .quiz-section h3 {
+            color: #00A4BD;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .question {
+            margin: 25px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .question h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options li {
+            margin: 12px 0;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .options li:hover {
+            background: #e9ecef;
+        }
+
+        .options li input {
+            margin-right: 12px;
+            transform: scale(1.1);
+        }
+
+        .quiz-feedback {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .quiz-feedback.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            display: block;
+        }
+
+        .quiz-feedback.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            display: block;
+        }
+
+        .btn:disabled {
+            background: #6c757d !important;
+            cursor: not-allowed !important;
+            opacity: 0.5 !important;
+        }
+
+        .btn:disabled:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>RSS Training Manual</h1>
+        <p>Retail Security Specialist - Coles Standard Operating Procedures</p>
+        <p>MA Services Group</p>
+        <p>Comprehensive Training Guide</p>
+    </div>
+
+    <div class="container">
+        <div class="start-section">
+            <div class="start-content">
+                <h2>Begin Your RSS Training</h2>
+                <p>Complete all 8 modules to master the Retail Security Specialist procedures and standards. Each module contains comprehensive information essential for effective performance in your role.</p>
+                <div class="warning-box" style="margin: 25px 0; text-align: left;">
+                    <h4>Important: Training Completion Requirements</h4>
+                    <p><strong>Training is not complete until you have:</strong></p>
+                    <ul style="margin: 10px 0 10px 20px;">
+                        <li>Successfully passed all 8 module knowledge checks</li>
+                        <li>Completed the official training sign-off form at the end</li>
+                    </ul>
+                    <p>Modules must be completed in order. You cannot progress to the next module without passing the current module's quiz.</p>
+                </div>
+                <button class="btn-start" onclick="showModule('intro')">Start Training</button>
+            </div>
+        </div>
+
+        <div id="moduleNavigation" class="module-nav">
+            <div class="module-card" data-module="intro">
+                <h3>1. Introduction & Role Overview</h3>
+                <p>Comprehensive overview of the RSS position, core duties, and integration with teams including IOC, covert operatives, and local police.</p>
+            </div>
+            <div class="module-card" data-module="shift">
+                <h3>2. Shift Management</h3>
+                <p>Detailed shift procedures from arrival to departure, equipment handling, documentation requirements, and break entitlements.</p>
+            </div>
+            <div class="module-card" data-module="conduct">
+                <h3>3. Code of Conduct & Professional Standards</h3>
+                <p>Professional behaviour expectations, anti-harassment policies, social media guidelines, and prohibited activities.</p>
+            </div>
+            <div class="module-card" data-module="customer">
+                <h3>4. Customer Engagement & De-escalation</h3>
+                <p>Say Hello protocol, DETER framework, communication techniques, and person of interest management strategies.</p>
+            </div>
+            <div class="module-card" data-module="technology">
+                <h3>5. Technology Systems & Loss Prevention</h3>
+                <p>Comprehensive guide to loss prevention technology, EAS systems, high-risk products, and theft recognition methods.</p>
+            </div>
+            <div class="module-card" data-module="reporting">
+                <h3>6. Reporting & Evidence Collection</h3>
+                <p>Police reporting requirements, Auror system usage, evidence collection procedures, and documentation standards.</p>
+            </div>
+            <div class="module-card" data-module="communication">
+                <h3>7. Communication & IOC Integration</h3>
+                <p>Radio protocols, IOC support services, communication structures, and stakeholder relationship management.</p>
+            </div>
+            <div class="module-card" data-module="procedures">
+                <h3>8. Emergency Procedures & Escalation</h3>
+                <p>Critical incident management, escalation hierarchy, emergency codes, and what not to do guidelines.</p>
+            </div>
+        </div>
+
+        <!-- Module 1: Introduction & Role Overview -->
+        <div class="module-content" id="intro">
+            <h2>Introduction & Role Overview</h2>
+            
+            <div class="key-info">
+                <h4>Document Confidentiality Notice</h4>
+                <p>The contents of this document are confidential and should not be shared with anyone other than the intended recipient. This training provides specific instruction to Retail Security Specialists (RSS) working in high-loss Coles stores as part of the Loss Levels Program.</p>
+            </div>
+
+            <div class="section">
+                <h3>Position Overview</h3>
+                <p>The Retail Security Specialist (RSS) is a dedicated, full-time (40 hours/week) security position responsible for managing crime-related loss in high-loss retail stores and assisting with providing a safe environment for team members. This position serves as a critical link between store operations, security systems, and law enforcement to create a comprehensive loss prevention strategy while ensuring the safety and security of all personnel.</p>
+                
+                <div class="highlight">
+                    <p><strong>Key Objective:</strong> The RSS role supports Coles' business strategy of providing excellence in customer service with a targeted approach to loss controls and team member safety.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Team Integration</h3>
+                <p>RSS officers work collaboratively with multiple teams to create a comprehensive security network:</p>
+                
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>Intelligence Operations Centre (IOC)</h4>
+                        <p>Real-time monitoring and alert triage support, CCTV oversight, and intelligence coordination. <strong>Note:</strong> IOC support is not currently available at all RSS locations.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Centre Security & Management</h4>
+                        <p>Shopping centre security teams and management for coordinated responses and incident management.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Uniformed Security Officers</h4>
+                        <p>Visible security presence and support during incidents and high-risk periods.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Coles Team Members</h4>
+                        <p>Store staff, managers, and customer service teams providing operational support.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Local Police</h4>
+                        <p>External law enforcement for incident response and investigation support.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Core Duties & Responsibilities</h3>
+                
+                <div class="procedure-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Security Presence and Response</h4>
+                            <p>Maintain a visible overt security presence on the shop floor as a licensed security professional. Respond to all loss technology alerts including wrong way detection, weighted shelves, Veesion, Move Alert, and ANPR systems.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Incident Management & Team Safety</h4>
+                            <p>Respond to and manage safety incidents in real-time, including collating witness statements, police evidence, and situation reports. Assist with providing a safe working environment for all team members by maintaining security presence and responding to threats or aggressive behaviour directed at staff.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Police and External Relationships</h4>
+                            <p>Build and maintain local police relationships, serving as the primary store contact. Report theft/security incidents to police within established reporting parameters and establish relationships with center management and security teams.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Evidence Collection and Documentation</h4>
+                            <p>Review CCTV footage and upload evidence to Auror reporting system. Collect evidence including receipts, photos, and other documentation. Compile and organise evidence required by police to charge offenders.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Technology Monitoring</h4>
+                            <p>Monitor and respond to all loss technology alerts in partnership with the IOC. Maximise the benefit of security technologies through real-time intervention and identify high-harm offenders as they offend.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Additional Support Responsibilities</h3>
+                
+                <div class="checklist">
+                    <h4>Value Add Responsibilities</h4>
+                    <div class="checklist-item">High risk products monitoring</div>
+                    <div class="checklist-item">Threatening situations & Auror reporting</div>
+                    <div class="checklist-item">Review of product protection execution</div>
+                    <div class="checklist-item">Security of the shop floor</div>
+                    <div class="checklist-item">Technology systems and alerts management</div>
+                    <div class="checklist-item">Correct usage of Store Use/Check Seals and Build to Sell</div>
+                </div>
+
+                <div class="checklist">
+                    <h4>Additional Support Tasks</h4>
+                    <div class="checklist-item">Ensure team members are using and wearing safety devices</div>
+                    <div class="checklist-item">Assist in investigating internal stock theft</div>
+                    <div class="checklist-item">Ensure all merchandise is properly product protected</div>
+                    <div class="checklist-item">Ensure physical security of store perimeters</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Team Safety Responsibilities</h3>
+                
+                <div class="success-box">
+                    <h4>Creating a Safe Working Environment</h4>
+                    <p>A critical aspect of the RSS role is assisting with providing a safe environment for all team members. This responsibility encompasses both proactive prevention and reactive response to ensure the wellbeing of store personnel.</p>
+                </div>
+
+                <div class="checklist">
+                    <h4>Team Safety Duties</h4>
+                    <div class="checklist-item">Monitor for aggressive or threatening behaviour directed at staff members</div>
+                    <div class="checklist-item">Respond to incidents involving intimidation or harassment of team members</div>
+                    <div class="checklist-item">Provide visible security presence to deter antisocial behaviour toward staff</div>
+                    <div class="checklist-item">Assist team members who feel unsafe or threatened during work hours</div>
+                    <div class="checklist-item">Coordinate with management on safety concerns affecting personnel</div>
+                    <div class="checklist-item">Document and report incidents that impact team member safety and wellbeing</div>
+                </div>
+
+                <div class="key-info">
+                    <h4>Proactive Safety Approach</h4>
+                    <p>Team safety is achieved through a combination of visible deterrence, professional customer engagement, and rapid response to concerning behaviours. RSS officers create a secure environment where team members can perform their duties without fear of intimidation, aggression, or unsafe situations.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Key Performance Indicators (KPIs)</h3>
+                
+                <div class="warning-box">
+                    <h4>Performance Measurement Areas</h4>
+                    <p>RSS performance is assessed through productivity measurements that directly impact store security and loss prevention effectiveness:</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>Police Reporting</h4>
+                        <p>Increase in incidents reported to police with proper documentation and evidence packages.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Evidence Collection</h4>
+                        <p>Increase in incidents with complete evidence packages ready for law enforcement action.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>High Harm Offender ID</h4>
+                        <p>Increase in professional/amateur offender identification and linking across incidents.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Technology Alert Response</h4>
+                        <p>Response rate to IOC triaged alerts and technology system notifications.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Auror Reporting</h4>
+                        <p>Quality and timeliness of Auror incident reports with comprehensive documentation and evidence uploads.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Inventory Adjustments</h4>
+                        <p>Reduction in frequency and quantity of stock adjustments in high loss product lines.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Return on Investment</h4>
+                        <p>Measures retail value of merchandise recovered and incidents prevented against cost of RSS service.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <h3>Knowledge Check - Complete to Continue</h3>
+                <div class="question">
+                    <h4>1. What is the primary purpose of the RSS role?</h4>
+                    <ul class="options">
+                        <li><input type="radio" name="q1_1" value="a"> Manage customer service operations</li>
+                        <li><input type="radio" name="q1_1" value="b"> Managing crime-related loss in high-loss retail stores and assisting with providing a safe environment for team members</li>
+                        <li><input type="radio" name="q1_1" value="c"> Supervise store team members</li>
+                        <li><input type="radio" name="q1_1" value="d"> Handle store maintenance issues</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <h4>2. Which teams does RSS work with as part of comprehensive security? (Select all that apply)</h4>
+                    <ul class="options">
+                        <li><input type="checkbox" name="q1_2" value="a"> Intelligence Operations Centre (IOC)</li>
+                        <li><input type="checkbox" name="q1_2" value="b"> Centre Security & Management</li>
+                        <li><input type="checkbox" name="q1_2" value="c"> Local police</li>
+                        <li><input type="checkbox" name="q1_2" value="d"> Store cleaning staff</li>
+                    </ul>
+                </div>
+                <div class="quiz-feedback" id="quiz1-feedback"></div>
+                <button class="btn" onclick="checkQuiz1()">Check Answers</button>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="showModule('moduleNavigation')">Back to Menu</button>
+                <button class="btn" id="next1" onclick="showModule('shift')" disabled style="opacity: 0.5;">Next: Shift Management</button>
+            </div>
+        </div>
+
+        <!-- Module 2: Shift Management -->
+        <div class="module-content" id="shift">
+            <h2>Shift Management</h2>
+
+            <div class="key-info">
+                <h4>Punctuality Requirement</h4>
+                <p><strong>Arrive 10 minutes early</strong> - You must be at your post when the shift officially starts. This allows time for proper setup and briefing without delaying operations.</p>
+            </div>
+
+            <div class="section">
+                <h3>Shift Start Process</h3>
+                
+                <div class="procedure-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Initial Sign-in</h4>
+                            <p>Sign in to TrackTik & Coles systems via the QR code at the service desk. This logs your attendance and provides access to necessary systems.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Management Notification</h4>
+                            <p>Notify the manager you are onsite and ask the service desk team member to alert the manager of your arrival.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Store-Specific Briefing</h4>
+                            <p>Report to the on-duty manager and inquire about store-specific issues including recent incidents, intelligence, and current theft hot spots.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Equipment Collection</h4>
+                            <p>Collect all required equipment: Body Worn Camera, Coles Headset, and Motorola Wave (2-way for communications to Operations Centre).</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Communication Check</h4>
+                            <p>Perform a radio check with the Operations Centre to ensure all communication systems are functioning properly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Initial Briefing Requirements</h3>
+                
+                <div class="checklist">
+                    <h4>Essential Briefing Elements</h4>
+                    <div class="checklist-item">Meet with manager to discuss your role for the day and recent security issues</div>
+                    <div class="checklist-item">Learn names of front-end team including service manager and front end coaches</div>
+                    <div class="checklist-item">Identify any covert operatives working in the store</div>
+                    <div class="checklist-item">Introduce yourself to Shopping Centre Security and obtain contact numbers</div>
+                    <div class="checklist-item">Check Auror system for recent events and ongoing investigations</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Store Assessment Procedures</h3>
+                
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>External Perimeter Check</h4>
+                        <p>Perform comprehensive sweep of external areas, ensuring entry/exit points are secure and operating correctly. Check for any security vulnerabilities or maintenance issues.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Internal Security Review</h4>
+                        <p>Assess internal product protection measures. This should be carried out progressively throughout the day as part of ongoing vigilance.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Technology Systems Check</h4>
+                        <p>Verify that relevant technology is operational including Weighted Shelves, Wrong Way detection, Veesion systems, and Move Alert technology.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Required Documentation</h3>
+                
+                <div class="danger-box">
+                    <h4>Critical Documentation Requirements</h4>
+                    <p>Entry may be denied if proper documentation is not presented or has expired. Always ensure documentation is current before reporting for duty.</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>Coles Induction Card</h4>
+                        <p>Must be current and not expired. Access the system at: www.contractor.colesgroup.com.au to verify status and renew if necessary.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Security Licence</h4>
+                        <p>Current security licence as per state legislation requirements. Expired licences prohibit work in stores and must be renewed immediately.</p>
+                    </div>
+                </div>
+            </div>
+
+             <div class="section">
+                <h3>Uniform Requirements</h3>
+                
+                <div class="content-grid">
+                    <div class="checklist">
+                        <h4>RSS Approved MA Uniform Standards</h4>
+                        <div class="checklist-item">Yellow BWC vest worn over black MA polo shirt (tucked in)</div>
+                        <div class="checklist-item">Black pants - professional appearance required</div>
+                        <div class="checklist-item">Black shoes - comfortable and professional, security boots preferred</div>
+                        <div class="checklist-item">Body Worn Camera properly attached and visible</div>
+                        <div class="checklist-item">Coles Headset worn</div>
+                    </div>
+                    
+                    <div class="content-card">
+                        <h4>Professional RSS Uniform Example</h4>
+                        <div style="text-align: center; padding: 20px;">
+                            <img src="https://github.com/michaelreeves92-png/RSSTraining1/blob/main/Uniform.jpeg?raw=true" alt="RSS Officer in Professional MA Services Uniform" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-height: 400px;">
+                            <p style="margin-top: 15px; color: #666; font-size: 0.9em; font-style: italic;">
+                                Example of proper RSS uniform presentation including yellow BWC vest, Black Polo, Black Trouser, Black Boots, Coles Headset, and body worn camera attachment.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="key-info">
+                    <h4>Uniform Presentation Standards</h4>
+                    <p>Your uniform represents both MA Services Group and Coles. Maintain a professional appearance at all times:</p>
+                    <ul style="margin: 10px 0 10px 20px;">
+                        <li>Ensure all uniform components are clean and well-maintained</li>
+                        <li>MA Services logos and branding should be clearly visible</li>
+                        <li>Body Worn Camera must be properly positioned and functional</li>
+                        <li>All equipment should be securely attached and easily accessible</li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="section">
+                <h3>Meal Break Entitlements</h3>
+                
+                <div class="warning-box">
+                    <h4>Break Policy Requirements</h4>
+                    <p>RSS officers must be contactable during meal breaks and respond accordingly if required. If an officer responds to a situation during a meal break, they are entitled to recommence their break at a later time.</p>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Shift Duration</th>
+                            <th>VIC/TAS/QLD</th>
+                            <th>NT/SA/WA</th>
+                            <th>NSW/ACT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>8 Hours</strong></td>
+                            <td>30 mins + 20 mins</td>
+                            <td>30 mins + 20 mins</td>
+                            <td>30 mins + 20 mins</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="key-info">
+                    <h4>Break Policy Notes</h4>
+                    <ul style="margin-left: 20px;">
+                        <li>All breaks are paid onsite breaks</li>
+                        <li>If called during break, officer may respond but must be provided time to complete the break later</li>
+                        <li>Break times may need to be flexible based on store operational requirements</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>End of Shift Process</h3>
+                
+                <div class="procedure-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Final Store Sweep</h4>
+                            <p>Carry out comprehensive final store sweep covering both internal and external areas. Ensure all security measures are in place.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Complete Documentation</h4>
+                            <p>Ensure all Auror reports are completed with accurate details and all incidents are properly documented.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Shift Summary Communication</h4>
+                            <p>Send shift summary via WhatsApp group using the template below. Ensure you have been added to the appropriate communication group.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Equipment Return</h4>
+                            <p>Return all equipment and ensure it is properly placed on charge for the next shift.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>System Sign-out</h4>
+                            <p>Sign out of TrackTik & Coles systems via QR code at service desk to complete shift logging.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>WhatsApp Shift Summary Template</h4>
+                    <p><strong>Use this exact format for your end-of-shift WhatsApp summary:</strong></p>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 14px; line-height: 1.5; margin: 15px 0;">
+[Store Name] - RSS Shift Summary<br>
+Date: [DD/MM/YYYY]<br>
+Shift: [Start Time] - [End Time]<br>
+RSS Officer: [Your Name]<br><br>
+
+STATISTICS:<br>
+• Auror Events: [Number]<br>
+• Police Reports: [Number]<br>
+• Total Value: $[Amount]<br><br>
+
+ENGAGEMENTS:<br>
+• Police: [Yes/No - Brief details if applicable]<br>
+• Centre Security: [Yes/No - Brief details if applicable]<br><br>
+
+KEY EVENTS:<br>
+• [Brief summary of significant incidents]<br>
+• [ORC offenders - descriptions/methods if applicable]<br>
+• [Any other notable security matters]<br><br>
+
+Status: Shift Complete
+                    </div>
+
+                    <p><strong>Example:</strong></p>
+                    <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 14px; line-height: 1.5; margin: 15px 0;">
+Coles Highpoint - RSS Shift Summary<br>
+Date: 17/09/2025<br>
+Shift: 0800 - 1600<br>
+RSS Officer: J. Smith<br><br>
+
+STATISTICS:<br>
+• Auror Events: 3<br>
+• Police Reports: 1<br>
+• Total Value: $287<br><br>
+
+ENGAGEMENTS:<br>
+• Police: Yes - Attended for $150+ meat theft, Ref: E12345<br>
+• Centre Security: No<br><br>
+
+KEY EVENTS:<br>
+• Male 30s, repeat offender, concealed steaks in jacket<br>
+• Two preventions at baby formula - visual deterrence effective<br>
+• Aggressive customer - de-escalated successfully<br><br>
+
+Status: Shift Complete
+                    </div>
+
+                    <p><strong>Tips:</strong> Include police reference numbers, describe ORC offenders with key features, mention successful preventions, keep summary concise but informative.</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <h3>Knowledge Check - Complete to Continue</h3>
+                <div class="question">
+                    <h4>1. What are the essential steps at shift start? (Select all that apply)</h4>
+                    <ul class="options">
+                        <li><input type="checkbox" name="q2_1" value="a"> Sign in to TrackTik & Coles via QR code</li>
+                        <li><input type="checkbox" name="q2_1" value="b"> Collect Body Worn Camera, headset, and radio</li>
+                        <li><input type="checkbox" name="q2_1" value="c"> Perform radio check with Operations Centre</li>
+                        <li><input type="checkbox" name="q2_1" value="d"> Check social media messages</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <h4>2. What must you have to work in stores? (Select all that apply)</h4>
+                    <ul class="options">
+                        <li><input type="checkbox" name="q2_2" value="a"> Current Coles Induction Card</li>
+                        <li><input type="checkbox" name="q2_2" value="b"> Current security licence</li>
+                        <li><input type="checkbox" name="q2_2" value="c"> Personal mobile phone</li>
+                        <li><input type="checkbox" name="q2_2" value="d"> Driver's licence</li>
+                    </ul>
+                </div>
+                <div class="quiz-feedback" id="quiz2-feedback"></div>
+                <button class="btn" onclick="checkQuiz2()">Check Answers</button>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="showModule('intro')">Previous: Introduction</button>
+                <button class="btn" id="next2" onclick="showModule('conduct')" disabled style="opacity: 0.5;">Next: Code of Conduct</button>
+            </div>
+        </div>
+
+        <!-- Module 3: Code of Conduct & Professional Standards -->
+        <div class="module-content" id="conduct">
+            <h2>Code of Conduct & Professional Standards</h2>
+
+            <div class="danger-box">
+                <h4>Fundamental Policy Statement</h4>
+                <p><strong>MASG HAS A STRICT "NO FRATERNISATION" POLICY</strong><br>RSS officers must conduct themselves professionally at all times. Any unnecessary social interaction with Coles team members, management, and/or customers, in person or on any social media platform will not be tolerated.</p>
+            </div>
+
+            <div class="section">
+                <h3>Professional Standards</h3>
+                
+                <div class="key-info">
+                    <h4>Foundation Principle</h4>
+                    <p>RSS officers must build a positive, respectful working environment with Coles Team Members by maintaining professional work-related conversations only. Personal relationships, social interactions, and non-work communications are strictly prohibited.</p>
+                </div>
+
+                <div class="success-box">
+                    <h4>Professional Demeanor Requirements</h4>
+                    <p>You must always maintain professional demeanour as a representative of MA Services and Coles:</p>
+                    <ul style="margin: 15px 0 15px 25px;">
+                        <li>Always be positive, courteous, professional, and proactive</li>
+                        <li>Present oneself with utmost professionalism, including correct uniform</li>
+                        <li>Never discriminate, harass, or disparage another person</li>
+                        <li>Never act in a manner that causes discredit to yourself, your team, or the Coles and MA Services brand</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Honesty and Integrity Standards</h3>
+                
+                <div class="warning-box">
+                    <h4>Zero Tolerance Policy</h4>
+                    <p>MASG will not allow any dishonesty or malpractice from RSS officers. This includes any unlawful, unethical, or improper behaviour that may cause damage, loss, reputational damage, or loss of goodwill.</p>
+                </div>
+
+                <div class="checklist">
+                    <h4>Examples of Dishonest Behaviour (Prohibited)</h4>
+                    <div class="checklist-item">Leaving early without authorisation</div>
+                    <div class="checklist-item">Taking extended lunch breaks beyond entitlements</div>
+                    <div class="checklist-item">Assisting another in the commission of theft, fraud, or misconduct</div>
+                    <div class="checklist-item">Any behaviour that damages the reputation of MA Services or Coles</div>
+                    <div class="checklist-item">Misrepresenting activities or incident details</div>
+                    <div class="checklist-item">Falsifying reports or documentation</div>
+                </div>
+
+                <div class="danger-box">
+                    <h4>Investigation and Disciplinary Action</h4>
+                    <p>If an RSS officer is suspected of engaging in dishonest behaviour, an investigation will be launched. If evidence supports the allegation, formal disciplinary action will be taken, which may result in termination of employment and/or police involvement.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Anti-Harassment Policy</h3>
+                
+                <div class="key-info">
+                    <h4>Definition</h4>
+                    <p>Harassment is any unwelcome behaviour that offends, humiliates, or intimidates a person and creates an unpleasant work environment. All forms of harassment are strictly prohibited.</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>Verbal Harassment Examples</h4>
+                        <ul style="margin-left: 15px;">
+                            <li>Sexual comments, advances or propositions</li>
+                            <li>Repeated questions about personal life</li>
+                            <li>Indecent jokes or innuendos</li>
+                            <li>Racist comments or spreading false information</li>
+                            <li>Comments about disability, pregnancy, sexual orientation, age, or religion</li>
+                            <li>Offensive language or inappropriate contact</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <h4>Non-Verbal Harassment Examples</h4>
+                        <ul style="margin-left: 15px;">
+                            <li>Leering or inappropriate staring</li>
+                            <li>Posting unwanted material on social media platforms</li>
+                            <li>Invasion of private space or standing too close unnecessarily</li>
+                            <li>Mimicking someone with a disability</li>
+                            <li>Inappropriate gestures or displays</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <h4>Physical Harassment Examples</h4>
+                        <ul style="margin-left: 15px;">
+                            <li>Unwelcome physical contact (kissing, hugging, pinching, patting, touching)</li>
+                            <li>Indecent or sexual assault or attempted assault</li>
+                            <li>Hitting, pushing, shoving, spitting, or throwing objects</li>
+                            <li>Blocking someone's path or cornering</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Social Media Awareness</h3>
+                
+                <div class="warning-box">
+                    <h4>Public Exposure Reality</h4>
+                    <p>Social Media presents challenges for RSS officers as individuals may photograph or video RSS officers and publish images to platforms such as Facebook, Instagram, Snapchat, TikTok, and others.</p>
+                </div>
+
+                <div class="checklist">
+                    <h4>Important Social Media Reminders</h4>
+                    <div class="checklist-item">Always keep in mind that if you are in a public place, anyone is legally permitted to photograph you</div>
+                    <div class="checklist-item">Anyone can legally film you and any incident in which you are engaged in public locations</div>
+                    <div class="checklist-item">Always act professionally and adhere to your SOPs knowing you may be recorded</div>
+                    <div class="checklist-item">If someone is filming you outside the store, do not approach them or attempt to take their equipment</div>
+                    <div class="checklist-item">Do not photograph or film persons of interest except in accordance with SOPs and with permission</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Prohibited Activities</h3>
+                
+                <div class="danger-box">
+                    <h4>Strictly Forbidden Actions</h4>
+                    <p>The following activities are completely prohibited and may result in immediate disciplinary action:</p>
+                </div>
+
+                <div class="procedure-steps">
+                    <div class="step">
+                        <div class="step-number">⌧</div>
+                        <div class="step-content">
+                            <h4>Personal Device Usage</h4>
+                            <p>Being distracted by talking on the phone or using phone for personal use. Notify store staff when making work-related reports only.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">⌧</div>
+                        <div class="step-content">
+                            <h4>Audio Equipment</h4>
+                            <p>Compromising safety by having ear pods or earphones in ears (except for authorised 2-way radios for work purposes).</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">⌧</div>
+                        <div class="step-content">
+                            <h4>Unprofessional Posture</h4>
+                            <p>Leaning on walls or EAS gates, sitting down, reading newspapers or magazines during duty hours.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">⌧</div>
+                        <div class="step-content">
+                            <h4>Physical Contact</h4>
+                            <p>Physically touching/handling/pursuing anybody unless required for the removal of a person where the safety of the store team and customers requires this. Any physical action must be in accordance with relevant laws and legislation.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">⌧</div>
+                        <div class="step-content">
+                            <h4>Unauthorised Checking</h4>
+                            <p>Checking bags/receipts unless store has appropriate signage and conditions of entry clearly displayed.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <h3>Knowledge Check - Complete to Continue</h3>
+                <div class="question">
+                    <h4>1. What is MASG's policy on fraternisation?</h4>
+                    <ul class="options">
+                        <li><input type="radio" name="q3_1" value="a"> Encouraged with team members</li>
+                        <li><input type="radio" name="q3_1" value="b"> Strict "NO FRATERNISATION" policy</li>
+                        <li><input type="radio" name="q3_1" value="c"> Allowed on social media only</li>
+                        <li><input type="radio" name="q3_1" value="d"> Permitted after work hours</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <h4>2. Which activities are strictly prohibited for RSS officers? (Select all that apply)</h4>
+                    <ul class="options">
+                        <li><input type="checkbox" name="q3_2" value="a"> Using phone for personal use during duty</li>
+                        <li><input type="checkbox" name="q3_2" value="b"> Physically touching suspects</li>
+                        <li><input type="checkbox" name="q3_2" value="c"> Leaning on walls or EAS gates</li>
+                        <li><input type="checkbox" name="q3_2" value="d"> Assisting customers with directions</li>
+                    </ul>
+                </div>
+                <div class="quiz-feedback" id="quiz3-feedback"></div>
+                <button class="btn" onclick="checkQuiz3()">Check Answers</button>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="showModule('shift')">Previous: Shift Management</button>
+                <button class="btn" id="next3" onclick="showModule('customer')" disabled style="opacity: 0.5;">Next: Customer Engagement</button>
+            </div>
+        </div>
+
+        <!-- Module 4: Customer Engagement & De-escalation -->
+        <div class="module-content" id="customer">
+            <h2>Customer Engagement & De-escalation</h2>
+
+            <div class="key-info">
+                <h4>Say Hello Protocol Reference</h4>
+                <p>Ensure you have a copy of the MA Retail Say Hello handout. All RSS officers must follow this protocol when working in customer environments such as Coles stores.</p>
+            </div>
+
+            <div class="section">
+                <h3>Core Customer Engagement Principles</h3>
+                
+                <div class="content-grid">
+                    <div class="success-box">
+                        <h4>😊 Smile and Say "Hello" When Customers Enter</h4>
+                        <p>Our goal is to ensure a wonderful shopping experience at any retail store for all customers. We do this by making the store a pleasant place to be. Greet people with positivity and always treat them with respect. Remember, most customers are genuine and there to shop.</p>
+                    </div>
+                    
+                    <div class="danger-box">
+                        <h4>🚫 Never Chase a Customer or Shoplifter</h4>
+                        <p>At no stage do we chase a shoplifter or suspected shoplifter; chasing a shoplifter puts your safety as well as other customers' safety in great risk. Chasing a shoplifter does not at all create a welcoming and friendly environment.</p>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <h4>💬 Keep Conversations Professional</h4>
+                        <p>Maintaining a good working relationship with the client is important, however refrain from making personal comments or compliments (e.g., about their appearance). You may think you are being friendly, however in most cases this can actually be deemed harassment.</p>
+                    </div>
+                    
+                    <div class="danger-box">
+                        <h4>🤚 Never Touch a Customer</h4>
+                        <p>Remember: Do Not Use Force to stop a person or Try to Forcibly recover items. Physically engaging with a potential shoplifter will greatly increase your risk of being assaulted and will put other customers and staff at risk. Also consider the brand damage that could be caused due to a physical incident.</p>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>😊 Smile When a Customer Leaves</h4>
+                        <p>We should always end the customer's experience on a positive note. Remember we want them to shop again, the customer after all is the reason why we are employed. We talk with customers in a professional and courteous manner because we LOVE what we do and we are PASSIONATE about helping our client achieve their goals.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Customer Engagement Best Practices</h3>
+                
+                <div class="checklist">
+                    <h4>RSS Customer Engagement Standards</h4>
+                    <div class="checklist-item">Maintain a friendly, approachable demeanour while being clearly visible</div>
+                    <div class="checklist-item">Always greet customers entering your area of responsibility</div>
+                    <div class="checklist-item">Offer directions or basic assistance when appropriate</div>
+                    <div class="checklist-item">Treat all customers with dignity regardless of suspicion level</div>
+                    <div class="checklist-item">Acknowledge customers leaving with a smile and farewell</div>
+                    <div class="checklist-item">Use customer service to defuse potentially tense situations</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Integration with Loss Prevention</h3>
+                
+                <div class="key-info">
+                    <h4>Multiple Purpose Strategy</h4>
+                    <p>Customer engagement serves multiple purposes for RSS officers beyond customer service:</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>Deterrent Effect</h4>
+                        <p>Positive engagement deters potential theft through acknowledgment and awareness that security is present and attentive.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Intelligence Gathering</h4>
+                        <p>Natural conversation can reveal suspicious behaviour patterns without confrontation or creating negative experiences.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Incident Prevention</h4>
+                        <p>Good customer service prevents escalation of minor issues and creates positive atmosphere that discourages problematic behaviour.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Brand Protection</h4>
+                        <p>Professional interaction protects Coles' reputation and maintains positive customer relationships even during security interventions.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Community Building</h4>
+                        <p>Establishes RSS as helpful rather than threatening presence, improving cooperation with legitimate customers and staff.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Communication De-escalation Skills</h3>
+                
+                <div class="warning-box">
+                    <h4>Fundamental Principle</h4>
+                    <p><strong>There is an equal and opposite reaction to every action!</strong><br>RSS officers who communicate with persons of interest with discretion and courtesy are less likely to be assaulted. By utilising excellent communication skills and treating individuals with respect, you will have a better chance of obtaining greater cooperation and are less likely to attract verbal or physical abuse.</p>
+                </div>
+
+                <div class="checklist">
+                    <h4>De-escalation Communication Principles</h4>
+                    <div class="checklist-item">Be respectful at all times, regardless of the situation</div>
+                    <div class="checklist-item">Speak in a friendly manner using a level below your normal speaking voice</div>
+                    <div class="checklist-item">Use rapport techniques to build connection and trust</div>
+                    <div class="checklist-item">Ensure your tone is calm and non-threatening throughout the interaction</div>
+                    <div class="checklist-item">Think before you speak - consider the impact of your words</div>
+                    <div class="checklist-item">Do not call them a thief, criminal or otherwise - refer only to "items not paid for"</div>
+                    <div class="checklist-item">Enter conversation to distract them from the issue at hand rather than confront</div>
+                    <div class="checklist-item">Treat persons of interest as you would want to be treated - with respect</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>DETER Framework for Person of Interest Management</h3>
+                
+                <div class="key-info">
+                    <h4>Framework Purpose</h4>
+                    <p>DETER provides a process for engaging with and managing Persons of Interest once the decision has been made to act. RSS officers should use this process as a mental checklist before, during and after an engagement. The main aim of DETER is to provide an overwhelming level of positive and proactive customer service to prevent unwanted activity before it occurs.</p>
+                </div>
+
+                <div class="procedure-steps">
+                    <div class="step">
+                        <div class="step-number">D</div>
+                        <div class="step-content">
+                            <h4>Decide</h4>
+                            <p>Assess the customer. If there is sufficient evidence to suggest a criminal offence is about to be committed, make a decision to act appropriately. Ensure you have reasonable grounds before proceeding.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">E</div>
+                        <div class="step-content">
+                            <h4>End Result</h4>
+                            <p>Establish an ideal outcome from the beginning and work towards that outcome with assistance of team members. Focus on prevention rather than confrontation.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">T</div>
+                        <div class="step-content">
+                            <h4>Tools/Teamwork</h4>
+                            <p>Use headsets to communicate with team members. Request attendance to utilise customer service skills. Be specific about what you want team members to do.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">E</div>
+                        <div class="step-content">
+                            <h4>Engage</h4>
+                            <p>RSS officers engage the person of interest while inside the store. Approach the aisle where person is located, engage other customers first where possible, then engage the person of interest.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">R</div>
+                        <div class="step-content">
+                            <h4>Record/Report</h4>
+                            <p>Always record observations and interactions. Ensure significant incidents are properly reported through management and documented in required systems.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="danger-box">
+                    <h4>Critical Safety Note</h4>
+                    <p>When the person of interest is displaying signs of possible aggression, <strong>do not request team members to assist</strong> - only RSS officers or store management may assist. If aggression continues, provide a clear pathway for exit and report the incident immediately.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Important Communication Reminders</h3>
+                
+                <div class="warning-box">
+                    <h4>Language and Approach Guidelines</h4>
+                    <ul style="margin: 15px 0 15px 25px;">
+                        <li>Do not call customers "thieves," "criminals," or make direct accusations</li>
+                        <li>Refer to items as "not paid for" rather than "stolen"</li>
+                        <li>Use rapport-building techniques to maintain positive interactions</li>
+                        <li>Enter conversations to distract from potential theft rather than confront</li>
+                        <li>Treat all persons of interest as you would want to be treated - with respect</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <h3>Knowledge Check - Complete to Continue</h3>
+                <div class="question">
+                    <h4>1. According to the Say Hello protocol, should you chase suspected shoplifters?</h4>
+                    <ul class="options">
+                        <li><input type="radio" name="q4_1" value="a"> Yes, always chase them</li>
+                        <li><input type="radio" name="q4_1" value="b"> Only chase if the value is high</li>
+                        <li><input type="radio" name="q4_1" value="c"> Never chase customers or shoplifters</li>
+                        <li><input type="radio" name="q4_1" value="d"> Chase only if police approve</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <h4>2. In the DETER framework, what does the "E" in "Engage" mean?</h4>
+                    <ul class="options">
+                        <li><input type="radio" name="q4_2" value="a"> Confront the person of interest directly about theft</li>
+                        <li><input type="radio" name="q4_2" value="b"> Call them a thief immediately</li>
+                        <li><input type="radio" name="q4_2" value="c"> Engage other customers first where possible, then the person of interest</li>
+                        <li><input type="radio" name="q4_2" value="d"> Exit the area immediately</li>
+                    </ul>
+                </div>
+                <div class="quiz-feedback" id="quiz4-feedback"></div>
+                <button class="btn" onclick="checkQuiz4()">Check Answers</button>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="showModule('conduct')">Previous: Code of Conduct</button>
+                <button class="btn" id="next4" onclick="showModule('technology')" disabled style="opacity: 0.5;">Next: Technology Systems</button>
+            </div>
+        </div>
+
+        <!-- Module 5: Technology Systems & Loss Prevention -->
+        <div class="module-content" id="technology">
+            <h2>Technology Systems & Loss Prevention</h2>
+
+            <div class="key-info">
+                <h4>Technology Integration Overview</h4>
+                <p>RSS officers must understand and respond to various technology systems designed to detect and prevent theft. These systems work in partnership with the IOC to provide real-time alerts and intervention opportunities.</p>
+            </div>
+
+            <div class="section">
+                <h3>Loss Prevention Technology Systems</h3>
+                
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>Wrong Way Detection</h4>
+                        <p><strong>Function:</strong> Camera analytics tracking wrong way exit through entry gates<br>
+                        <strong>Benefits:</strong> Provides real-time alerts for intervention and bookmarked footage for future review<br>
+                        <strong>Response:</strong> Immediate assessment and appropriate customer engagement</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Weighted Shelves</h4>
+                        <p><strong>Function:</strong> Weight-based technology detecting and deterring theft<br>
+                        <strong>Benefits:</strong> Delivers SMS alerts to team members paired with audio alerts<br>
+                        <strong>Response:</strong> Multiple prevention instances through real-time monitoring</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Veesion</h4>
+                        <p><strong>Function:</strong> Computer vision AI detecting potential theft down aisles<br>
+                        <strong>Benefits:</strong> Real-time alerts triaged by IOC (currently in proof-of-concept)<br>
+                        <strong>Response:</strong> IOC coordination for assessment and intervention</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Move Alert</h4>
+                        <p><strong>Function:</strong> Infrared technology above high-risk areas<br>
+                        <strong>Benefits:</strong> Audio-only alerts requiring no team member interaction<br>
+                        <strong>Response:</strong> Focused on vitamins category with significant loss reduction results</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>CCTV Systems</h3>
+                
+                <div class="warning-box">
+                    <h4>CCTV Management Requirements</h4>
+                    <ul style="margin: 15px 0 15px 25px;">
+                        <li>All CCTV uploaded to Auror should be exported from Coles CCTV system</li>
+                        <li>IOC can assist with obtaining CCTV footage when needed</li>
+                        <li>Ensure proper chain of custody for all video evidence</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Electronic Article Surveillance (EAS)</h3>
+                
+                <div class="key-info">
+                    <h4>EAS System Overview</h4>
+                    <p>EAS gates are commonly seen across the front of stores and appear as transparent, shoulder-height panels with red lights. Some are built into floors or checkouts and are more discreet. Their purpose is to detect security tags in high-value products as they exit the store.</p>
+                </div>
+
+                <div class="procedure-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>EAS Activation Response</h4>
+                            <p>RSS officers are required to respond to any activation they see or hear. Always approach with positive customer service mindset.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Customer Service Approach</h4>
+                            <p>Provide proactive/positive customer service. Many activations are accidental due to incorrect deactivation or pre-existing purchases.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Smart EAS Features</h4>
+                            <p>Smart EAS gates in ACO areas make discreet announcements when live tags enter and will alarm if tags are still live when exiting ACO area.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="danger-box">
+                    <h4>Critical EAS Understanding</h4>
+                    <p><strong>AN EAS ACTIVATION IS NOT PROOF OF THEFT</strong><br>Many activations are caused by incorrect deactivation at point of sale or items already purchased before entering the store. Always approach with customer service mindset, not accusatory behaviour.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Smart Systems</h3>
+                
+                <div class="warning-box">
+                    <h4>Smart Gates Operation</h4>
+                    <p>Smart Gates are located in ACO (Automated Checkout) areas and open after payment completion. <strong>Important:</strong> Coles ACO/Customer Service staff manage manual operations. RSS officers do NOT assist with gate management, and MA guards are NOT provided with remotes.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>High Risk Product Lines</h3>
+                
+                <div class="key-info">
+                    <h4>Organised Retail Crime (ORC) Focus</h4>
+                    <p>RSS officers must focus attention on ORC target items, which are stolen in large quantities for resale. Understanding these products helps prioritise monitoring efforts.</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="success-box">
+                        <h4>Primary High-Risk Items</h4>
+                        <ul style="margin: 10px 0 10px 20px;">
+                            <li><strong>Meat products</strong> (fresh and packaged)</li>
+                            <li><strong>Baby Formula</strong> (all brands and types)</li>
+                            <li><strong>Dental products</strong> (electric toothbrushes, premium brands like Sensodyne)</li>
+                            <li><strong>Razor blades</strong> (premium brands/versions)</li>
+                            <li><strong>Vitamins and Medicines</strong> (high value, small packet types)</li>
+                            <li><strong>Health & Beauty products</strong> (makeup and skin care products)</li>
+                            <li><strong>Confectionary</strong> (bulk theft common)</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <h4>Secondary High-Risk Items (Store Dependent)</h4>
+                        <ul style="margin: 10px 0 10px 20px;">
+                            <li><strong>Coffee</strong> (premium brands)</li>
+                            <li><strong>Cooking Oil</strong></li>
+                            <li><strong>Batteries</strong></li>
+                            <li><strong>Small Appliances / USB accessories</strong></li>
+                            <li><strong>Soft Drinks</strong> (bulk theft)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="key-info">
+                    <h4>Store-Specific Intelligence</h4>
+                    <p>Every store is different. RSS officers should speak with Store Management to ascertain current high loss areas/items, methods being employed by offenders, and any known recidivist offenders frequenting the store.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Common Methods of Theft Recognition</h3>
+                
+                <div class="warning-box">
+                    <h4>Detection Skills Development</h4>
+                    <p>RSS officers must become highly aware of theft methods to enable effective detection of persons of interest. Understanding these patterns helps with early intervention and prevention.</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>Concealment Methods</h4>
+                        <ul style="margin: 10px 0 10px 15px;">
+                            <li><strong>Personal Items:</strong> Inside handbags, backpacks, or personal shopping bags</li>
+                            <li><strong>Body Concealment:</strong> Inside clothing, jackets, or pants</li>
+                            <li><strong>Trolley/Basket:</strong> Hidden among other shopping or in trolley compartments</li>
+                            <li><strong>Package Manipulation:</strong> Removing items from packaging while in store</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <h4>Exit Strategies</h4>
+                        <ul style="margin: 10px 0 10px 15px;">
+                            <li><strong>Bulk Loading:</strong> Loading trolleys with large quantities and leaving via main entrance</li>
+                            <li><strong>Self-Service Manipulation:</strong> Not scanning items at checkout or partial scanning</li>
+                            <li><strong>Avoidance Patterns:</strong> Using main entrance to avoid team members or security officers</li>
+                            <li><strong>Quick Exit:</strong> Rapid departure after selection and concealment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Technology Response Protocols</h3>
+                
+                <div class="checklist">
+                    <h4>RSS Technology System Responsibilities</h4>
+                    <div class="checklist-item">Respond to all loss technology alerts including wrong way detection, weighted shelves, Veesion, Move Alert, and ANPR</div>
+                    <div class="checklist-item">Report incidents from all loss technology alerts through appropriate channels</div>
+                    <div class="checklist-item">Maximise the benefit of security technologies through real-time intervention</div>
+                    <div class="checklist-item">Identify and report high-harm offenders as they offend using technology assistance</div>
+                    <div class="checklist-item">Coordinate with IOC for technology alert triage and response prioritisation</div>
+                    <div class="checklist-item">Monitor and respond to all loss technology alerts in partnership with the IOC</div>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <h3>Knowledge Check - Complete to Continue</h3>
+                <div class="question">
+                    <h4>1. What should you remember about EAS (Electronic Article Surveillance) activations?</h4>
+                    <ul class="options">
+                        <li><input type="radio" name="q5_1" value="a"> They are always proof of theft</li>
+                        <li><input type="radio" name="q5_1" value="b"> They should be ignored unless management responds</li>
+                        <li><input type="radio" name="q5_1" value="c"> EAS activation is NOT proof of theft</li>
+                        <li><input type="radio" name="q5_1" value="d"> Only police should respond to EAS activations</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <h4>2. Which are primary high-risk product lines? (Select all that apply)</h4>
+                    <ul class="options">
+                        <li><input type="checkbox" name="q5_2" value="a"> Baby Formula</li>
+                        <li><input type="checkbox" name="q5_2" value="b"> Razor blades</li>
+                        <li><input type="checkbox" name="q5_2" value="c"> Meat products</li>
+                        <li><input type="checkbox" name="q5_2" value="d"> Bread and bakery items</li>
+                    </ul>
+                </div>
+                <div class="quiz-feedback" id="quiz5-feedback"></div>
+                <button class="btn" onclick="checkQuiz5()">Check Answers</button>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="showModule('customer')">Previous: Customer Engagement</button>
+                <button class="btn" id="next5" onclick="showModule('reporting')" disabled style="opacity: 0.5;">Next: Reporting & Documentation</button>
+            </div>
+        </div>
+
+        <!-- Module 6: Reporting & Documentation -->
+        <div class="module-content" id="reporting">
+            <h2>Reporting & Documentation</h2>
+
+            <div class="section">
+                <h3>Daily Reporting Requirements</h3>
+                
+                <div class="checklist">
+                    <h4>Essential Daily Tasks</h4>
+                    <div class="checklist-item">Log all Safety Events in TrackTik system with accurate details</div>
+                    <div class="checklist-item">Complete all required Auror reports for incidents and observations</div>
+                    <div class="checklist-item">Ensure all incidents are recorded with comprehensive, accurate details</div>
+                    <div class="checklist-item">Send shift summary via WhatsApp group (ensure you have been added)</div>
+                </div>
+
+                <div class="key-info">
+                    <h4>Timing Requirements</h4>
+                    <p><strong>Important:</strong> All reporting must be completed after the incident has occurred, ideally on the same day. Delayed reporting can compromise evidence quality and investigation effectiveness.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Contact Information - National Operations Centre</h3>
+                
+                <div class="warning-box">
+                    <h4>MA National Operations Centre (NOC)</h4>
+                    <p><strong>Phone:</strong> 1300 02 04 06<br>
+                    <strong>Email:</strong> noc@maservicesgroup.com.au</p>
+                    <p>Any significant occurrence must be reported to NOC and your line manager. This means informing the operator of the incident and relevant details and advising that the NOC escalate the incident to the appropriate MA manager and Coles Team.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Police Reporting Requirements</h3>
+                
+                <div class="danger-box">
+                    <h4>Mandatory Police Contact</h4>
+                    <p>Police MUST be contacted for the following incidents:</p>
+                    <ul style="margin: 15px 0 15px 25px;">
+                        <li><strong>Any theft or recovery</strong> (left store, goods recovered) if value is <strong>$500 or more</strong></li>
+                        <li><strong>Known recidivist offenders</strong> (confirmed through officer memory, security alerts, store management information, or Auror confirmation)</li>
+                        <li><strong>Threatening or violent behaviour</strong> including weapon threats</li>
+                        <li><strong>High harm offenders</strong> identified through surveillance or previous incidents</li>
+                    </ul>
+                </div>
+
+                <div class="key-info">
+                    <h4>Discretionary Police Reporting</h4>
+                    <p><strong>Note:</strong> Theft events under $500 CAN be reported to police, however everything over $500 MUST be reported. RSS officers may report lower-value thefts when circumstances warrant police involvement (repeat offenders, aggressive behaviour, etc.).</p>
+                </div>
+
+                <div class="key-info">
+                    <h4>In-Store Prevention Reporting</h4>
+                    <p><strong>Note:</strong> In-store preventions typically cannot be reported to police unless special circumstances exist (known wanted offender, threats of violence, weapons displayed).</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Police Reporting Process</h3>
+                
+                <div class="procedure-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Immediate Contact</h4>
+                            <p>Contact police immediately for qualifying incidents. Do not delay as this may compromise evidence or investigation opportunities.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Obtain Reference Information</h4>
+                            <p>Obtain and record: Police reference number, Officer full name, Station details, and Contact information (phone/email).</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Complete Auror Documentation</h4>
+                            <p>Complete comprehensive Auror report with all police details and incident information.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Prepare Evidence Package</h4>
+                            <p>Compile complete evidence package including CCTV, photos, receipts, and statements.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Follow-up Requirements</h4>
+                            <p>May be required to attend police station for formal statements and evidence presentation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Event Reporting Decision Framework</h3>
+                
+                <div class="key-info">
+                    <h4>Incident and Offender Identification Framework</h4>
+                    <p><strong>Important Clarification:</strong> "Identification" refers to <strong>who first spots or recognises the incident or offender</strong>. This determines the reporting pathway and responsibility allocation for documentation, evidence collection, and external notifications.</p>
+                </div>
+
+                <div class="danger-box">
+                    <h4>Critical Understanding: Two Event Types</h4>
+                    <p><strong>Non-Emergency Events:</strong> Standard theft, prevention, suspicious activity, routine security matters</p>
+                    <p><strong>Emergency Events:</strong> Immediate danger, violence, weapons, serious threats, incidents requiring urgent police response</p>
+                    <p>The <strong>same person who identifies</strong> (spots) the incident determines the workflow, but responsibilities differ significantly between emergency and non-emergency situations.</p>
+                </div>
+
+                <h4>NON-EMERGENCY EVENT REPORTING WORKFLOWS</h4>
+
+                <div class="procedure-steps">
+                    <div class="step">
+                        <div class="step-number">RSS</div>
+                        <div class="step-content">
+                            <h4>When RSS/Covert Officer Spots Incident/Offender</h4>
+                            <p><strong>RSS Officer Responsibilities:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li><strong>Auror Report:</strong> Create complete Auror event with all incident details</li>
+                                <li><strong>IOC Communication:</strong> Tag Auror group "IOC" in comments section</li>
+                                <li><strong>Evidence Collection:</strong> Collect training receipts, photograph products, document physical evidence</li>
+                                <li><strong>Statement Generation:</strong> Write formal statement as the officer directly involved in incident</li>
+                                <li><strong>Police Reporting:</strong> Report to police once footage, receipt and statement are compiled</li>
+                                <li><strong>Centre Security:</strong> Notify centre security of high harm offenders and trespass notices</li>
+                            </ul>
+                            <p><strong>IOC Support Role:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>Obtain CCTV footage and provide to RSS officer</li>
+                                <li>Complete additional event details in Auror if required</li>
+                                <li>Assist with evidence compilation and quality checking</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">IOC</div>
+                        <div class="step-content">
+                            <h4>When IOC Spots Incident/Offender (via CCTV monitoring)</h4>
+                            <p><strong>IOC Responsibilities:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li><strong>Auror Report:</strong> Create complete Auror event with all incident details</li>
+                                <li><strong>CCTV Evidence:</strong> Obtain and attach CCTV footage showing complete incident</li>
+                                <li><strong>Statement Generation:</strong> Generate formal statement as the person who reviewed footage</li>
+                                <li><strong>RSS Coordination:</strong> Direct RSS to collect training receipts and physical evidence</li>
+                            </ul>
+                            <p><strong>RSS Field Support Role:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>Update Auror event with training receipt and product photos</li>
+                                <li>Collect any additional physical evidence as directed</li>
+                                <li>Report to police once footage, receipt and statement are compiled</li>
+                                <li>Handle centre security notifications as required</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">STORE</div>
+                        <div class="step-content">
+                            <h4>When Store Team Member Spots Incident/Offender</h4>
+                            <p><strong>Store Team Member Initial Actions:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li><strong>Auror Report:</strong> Create basic Auror event with available details</li>
+                                <li><strong>Tag Requirements:</strong> Tag Auror group "IOC" AND include RSS officer name in comments</li>
+                                <li><strong>Evidence Preservation:</strong> Secure any immediate physical evidence or receipts</li>
+                            </ul>
+                            <p><strong>IOC or RSS Follow-up (whoever reviews footage):</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>Obtain CCTV footage and complete event details</li>
+                                <li>Update Auror event with comprehensive information</li>
+                                <li>Generate formal statement as the person who reviewed footage</li>
+                            </ul>
+                            <p><strong>RSS Completion Actions:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>Update Auror with training receipts and additional evidence</li>
+                                <li>Report to police once complete evidence package is compiled</li>
+                                <li>Handle centre security notifications</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>EMERGENCY EVENT REPORTING WORKFLOWS</h4>
+
+                <div class="warning-box">
+                    <h4>Emergency Priority: Safety First</h4>
+                    <p>In emergency situations, <strong>immediate safety and emergency service notification take absolute priority</strong> over documentation. Evidence collection follows after safety is secured.</p>
+                </div>
+
+                <div class="procedure-steps">
+                    <div class="step">
+                        <div class="step-number">RSS</div>
+                        <div class="step-content">
+                            <h4>When RSS/Covert Officer Spots Emergency Incident/Offender</h4>
+                            <p><strong>Immediate Actions (Priority Order):</strong></p>
+                            <ol style="margin: 10px 0 10px 20px;">
+                                <li><strong>Emergency Services:</strong> Call 000 immediately if working solo, or radio IOC for emergency coordination</li>
+                                <li><strong>Centre Security:</strong> Notify centre security immediately of emergency situation</li>
+                                <li><strong>Safety Secure:</strong> Ensure area safety and manage immediate threats</li>
+                            </ol>
+                            <p><strong>Documentation Responsibilities (After Safety Secured):</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li><strong>Auror Report:</strong> Create comprehensive Auror event with emergency classification</li>
+                                <li><strong>IOC Communication:</strong> Tag Auror group "IOC" in comments</li>
+                                <li><strong>Evidence Priority:</strong> Collect time-sensitive evidence and secure scene</li>
+                                <li><strong>Statement Generation:</strong> Create detailed statement as directly involved officer</li>
+                                <li><strong>Police Coordination:</strong> Provide complete evidence package to attending police</li>
+                            </ul>
+                            <p><strong>IOC Emergency Support:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>Coordinate emergency services if RSS requests assistance</li>
+                                <li>Prioritise CCTV footage extraction for emergency investigation</li>
+                                <li>Assist with real-time intelligence and pattern analysis</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">IOC</div>
+                        <div class="step-content">
+                            <h4>When IOC Spots Emergency Incident/Offender</h4>
+                            <p><strong>Immediate Actions (Priority Order):</strong></p>
+                            <ol style="margin: 10px 0 10px 20px;">
+                                <li><strong>Emergency Services:</strong> Contact 000 and coordinate emergency response</li>
+                                <li><strong>RSS Alert:</strong> Immediately alert RSS officer to emergency situation and location</li>
+                                <li><strong>Centre Security:</strong> Notify centre security of emergency incident</li>
+                                <li><strong>CCTV Priority:</strong> Secure and preserve critical CCTV evidence immediately</li>
+                            </ol>
+                            <p><strong>Documentation Responsibilities:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li><strong>Auror Report:</strong> Create comprehensive emergency incident report</li>
+                                <li><strong>Evidence Coordination:</strong> Compile complete CCTV package with timestamps</li>
+                                <li><strong>Statement Generation:</strong> Generate statement as person who reviewed footage</li>
+                                <li><strong>Police Support:</strong> Provide evidence package to responding officers</li>
+                            </ul>
+                            <p><strong>RSS Field Coordination:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>Coordinate with IOC on evidence collection priorities</li>
+                                <li>Update Auror with additional field observations and physical evidence</li>
+                                <li>Support police investigation with on-scene information</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">STORE</div>
+                        <div class="step-content">
+                            <h4>When Store Team Member Spots Emergency Incident/Offender</h4>
+                            <p><strong>Store Team Immediate Actions:</strong></p>
+                            <ol style="margin: 10px 0 10px 20px;">
+                                <li><strong>Emergency Services:</strong> Call 000 immediately for emergency response</li>
+                                <li><strong>Centre Security:</strong> Notify centre security of emergency situation</li>
+                                <li><strong>Safety Priority:</strong> Secure area and ensure customer/staff safety</li>
+                                <li><strong>Alert RSS/IOC:</strong> Immediately notify RSS officer and/or IOC of emergency</li>
+                            </ol>
+                            <p><strong>Documentation Handover:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li><strong>Auror Creation:</strong> Create basic Auror event tagged with "IOC" and RSS name</li>
+                                <li><strong>Evidence Preservation:</strong> Secure any immediate physical evidence</li>
+                                <li><strong>Information Relay:</strong> Provide detailed information to responding RSS/IOC</li>
+                            </ul>
+                            <p><strong>IOC/RSS Emergency Completion:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>Take over documentation and evidence compilation</li>
+                                <li>Complete comprehensive Auror reporting with emergency protocols</li>
+                                <li>Generate statements and coordinate with attending police</li>
+                                <li>Handle all external stakeholder communications</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="danger-box">
+                    <h4>Absolute Requirements - No Exceptions</h4>
+                    <ul style="margin: 15px 0 15px 25px;">
+                        <li><strong>IOC Tagging:</strong> Every RSS/Store-identified incident MUST tag IOC group in Auror comments</li>
+                        <li><strong>RSS Identification:</strong> Store-identified incidents MUST include RSS officer name in comments</li>
+                        <li><strong>Evidence Authority:</strong> Whoever reviews CCTV footage generates the formal statement</li>
+                        <li><strong>Police Reporting:</strong> RSS officer maintains final responsibility for police contact and reporting</li>
+                        <li><strong>Emergency Priority:</strong> Safety and emergency services always take precedence over documentation</li>
+                        <li><strong>Complete Packages:</strong> No police reports without complete evidence packages (CCTV, receipt, statement)</li>
+                    </ul>
+                </div>
+
+                <div class="success-box">
+                    <h4>Quality Control Checkpoints</h4>
+                    <p>Before completing any incident reporting process:</p>
+                    <ul style="margin: 15px 0 15px 25px;">
+                        <li>Verify all required stakeholders are tagged in Auror comments</li>
+                        <li>Confirm CCTV footage shows complete incident from approach to exit</li>
+                        <li>Ensure training receipts accurately reflect stolen merchandise values</li>
+                        <li>Validate statement is generated by person who reviewed footage</li>
+                        <li>Check that police reporting thresholds and criteria are met</li>
+                        <li>Confirm centre security notifications are appropriate for incident type</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Evidence Collection Requirements</h3>
+                
+                <div class="warning-box">
+                    <h4>Comprehensive Evidence Standards</h4>
+                    <p>All police reports must include complete evidence packages with the following components:</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>CCTV Footage</h4>
+                        <p>Exported from Coles system showing entire incident from approach through exit. Include timestamps and clear visual evidence of actions.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Product Evidence</h4>
+                        <p>Photos of unpaid items with training receipts showing values. Document all items involved in incident.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Offender Information</h4>
+                        <p>Photos (with consent) or CCTV images, complete physical description, and behaviour indicators.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Supporting Documentation</h4>
+                        <p>Incident reports, police statements, witness statements, and any additional relevant materials.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>BWC Footage</h4>
+                        <p>Body Worn Camera footage when applicable (note: not available for in-store viewing).</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Police Details</h4>
+                        <p>Police Reference Number, Officer Full Name, Station, and Contact Details (phone/email).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Auror Reporting System</h3>
+                
+                <div class="danger-box">
+                    <h4>Critical System for RSS Success</h4>
+                    <p><strong>All incidents must be documented in Auror with complete evidence packages.</strong> This system serves as the central repository for all security-related information and evidence.</p>
+                    <p><strong>RSS Role Success Measurement:</strong> Your performance and the effectiveness of the RSS program is directly measured from these reports. Comprehensive and timely Auror reporting demonstrates:</p>
+                    <ul style="margin: 15px 0 15px 25px;">
+                        <li>Professional competence and attention to detail</li>
+                        <li>Contribution to loss prevention and crime reduction</li>
+                        <li>Evidence quality for law enforcement action</li>
+                        <li>Intelligence gathering for pattern analysis</li>
+                        <li>Return on investment for the RSS program</li>
+                    </ul>
+                </div>
+
+                <div class="key-info">
+                    <h4>Mandatory Reporting Requirement</h4>
+                    <p><strong>All retail crime events must be reported on the Auror platform.</strong> This includes but is not limited to:</p>
+                    <ul style="margin: 10px 0 10px 20px;">
+                        <li><strong>Theft incidents</strong> - completed and attempted</li>
+                        <li><strong>Fraud cases</strong> - payment fraud, refund fraud, receipt fraud</li>
+                        <li><strong>Aggressive behaviour/disorderly conduct</strong> - threats, verbal abuse, intimidation, disruptive behaviour</li>
+                        <li><strong>Suspicious activity</strong> - reconnaissance, organised retail crime indicators</li>
+                        <li><strong>Safety incidents</strong> - accidents, medical emergencies in relation to security</li>
+                        <li><strong>Technology alerts</strong> - only when confirmed theft or attempted theft has occurred</li>
+                        <li><strong>Prevention activities</strong> - successful deterrence through RSS presence</li>
+                    </ul>
+                    <p><strong>Remember:</strong> Every report contributes to the bigger picture of store security and helps identify patterns, repeat offenders, and emerging threats.</p>
+                </div>
+
+                <div class="procedure-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Event Classification</h4>
+                            <p>Properly classify incidents: Shoplifting, fraud, general intelligence, prevention, or other relevant categories. Accurate classification enables better analysis and response.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Store and Time Details</h4>
+                            <p>Record accurate location, date, and exact time incident occurred. Precision is critical for evidence correlation and pattern analysis.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Person Information</h4>
+                            <p>Complete physical description, behaviour indicators, and any identifying characteristics or previous incidents. This builds offender intelligence database.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Method Documentation</h4>
+                            <p>Detail the complete process: Entry method, selection process, concealment techniques, and exit strategy. This information helps identify patterns.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Product and Outcome Details</h4>
+                            <p>Complete list with values and recovery status. Include outcome: prevention, recovery, or police involvement. This data measures RSS effectiveness.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <h4>Evidence Upload</h4>
+                            <p>Upload all supporting materials to evidence locker with proper categorisation and descriptions. Quality evidence supports prosecutions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Quality Standards Impact</h4>
+                    <p>The quality and completeness of your Auror reports directly impacts:</p>
+                    <ul style="margin: 10px 0 10px 20px;">
+                        <li><strong>Police investigations</strong> - Better reports lead to more successful prosecutions</li>
+                        <li><strong>Store intelligence</strong> - Detailed reports help identify repeat offenders and methods</li>
+                        <li><strong>RSS program evaluation</strong> - Your performance metrics are derived from report quality</li>
+                        <li><strong>Resource allocation</strong> - Report data determines where security resources are most needed</li>
+                        <li><strong>Crime prevention</strong> - Intelligence from reports helps prevent future incidents</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Documentation Best Practices</h3>
+                
+                <div class="checklist">
+                    <h4>Quality Assurance Standards</h4>
+                    <div class="checklist-item">Check for existing offender profiles before creating new ones to avoid duplicates</div>
+                    <div class="checklist-item">Complete reports immediately after incidents while details are fresh</div>
+                    <div class="checklist-item">Include detailed narrative in additional details section with comprehensive information</div>
+                    <div class="checklist-item">Upload all relevant evidence to evidence locker with proper descriptions</div>
+                    <div class="checklist-item">Ensure police details are complete and accurate when applicable</div>
+                    <div class="checklist-item">Review reports for completeness before submission</div>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <h3>Knowledge Check - Complete to Continue</h3>
+                <div class="question">
+                    <h4>1. Which events must be reported to police? (Select all that apply)</h4>
+                    <ul class="options">
+                        <li><input type="checkbox" name="q6_1" value="a"> Theft events $500 or more</li>
+                        <li><input type="checkbox" name="q6_1" value="b"> Known recidivist offenders</li>
+                        <li><input type="checkbox" name="q6_1" value="c"> Threatening or violent behaviour</li>
+                        <li><input type="checkbox" name="q6_1" value="d"> All EAS activations</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <h4>2. What is the phone number for the MA National Operations Centre (NOC)?</h4>
+                    <ul class="options">
+                        <li><input type="radio" name="q6_2" value="a"> 1300 01 02 03</li>
+                        <li><input type="radio" name="q6_2" value="b"> 1300 02 04 06</li>
+                        <li><input type="radio" name="q6_2" value="c"> 1800 05 07 09</li>
+                        <li><input type="radio" name="q6_2" value="d"> 1800 10 11 12</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <h4>3. Which types of retail crime events must be reported on Auror? (Select all that apply)</h4>
+                    <ul class="options">
+                        <li><input type="checkbox" name="q6_3" value="a"> Theft incidents (completed and attempted)</li>
+                        <li><input type="checkbox" name="q6_3" value="b"> Prevention activities and deterrence</li>
+                        <li><input type="checkbox" name="q6_3" value="c"> Aggressive behaviour/disorderly conduct</li>
+                        <li><input type="checkbox" name="q6_3" value="d"> Personal shopping activities</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <h4>4. Why is quality Auror reporting critical for RSS success?</h4>
+                    <ul class="options">
+                        <li><input type="radio" name="q6_4" value="a"> It's required by Coles management only</li>
+                        <li><input type="radio" name="q6_4" value="b"> RSS role success is directly measured from these reports</li>
+                        <li><input type="radio" name="q6_4" value="c"> It helps with store inventory management</li>
+                        <li><input type="radio" name="q6_4" value="d"> It's only needed for police incidents</li>
+                    </ul>
+                </div>
+                <div class="quiz-feedback" id="quiz6-feedback"></div>
+                <button class="btn" onclick="checkQuiz6()">Check Answers</button>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="showModule('technology')">Previous: Technology Systems</button>
+                <button class="btn" id="next6" onclick="showModule('communication')" disabled style="opacity: 0.5;">Next: Communication & IOC Integration</button>
+            </div>
+        </div>
+
+        <!-- Module 7: Communication & IOC Integration -->
+        <div class="module-content" id="communication">
+            <h2>Communication & IOC Integration</h2>
+
+            <div class="section">
+                <h3>Intelligence Operations Centre (IOC) Overview</h3>
+                
+                <div class="key-info">
+                    <h4>IOC Mission</h4>
+                    <p>The IOC bridges the gap between store loss technologies, onsite security presence and intelligence, monitoring CCTV across multiple stores and triaging technology alerts.</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Availability Notice</h4>
+                    <p><strong>Important:</strong> IOC integration is not currently available at all RSS locations. RSS officers should confirm IOC availability with their supervisor during deployment. Where IOC is not available, RSS officers maintain direct contact with store management.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>IOC Support Services</h3>
+                
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>CCTV Monitoring</h4>
+                        <p>Monitor CCTV systems across multiple stores simultaneously, providing real-time oversight and incident detection.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Alert Triage</h4>
+                        <p>Respond and triage all loss technology alerts, prioritising response based on threat level and evidence quality.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Radio Communication</h4>
+                        <p>Communicate proactively with RSS through radio systems, providing real-time intelligence and guidance.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Documentation Support</h4>
+                        <p>Complete Auror reports when theft or prevention occurs, reducing administrative burden on field officers.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Intelligence Database</h4>
+                        <p>Build actionable intelligence database with offender profiles and pattern analysis.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Target Profiles</h4>
+                        <p>Prepare target profile guides for RSS officers based on known offenders and risk assessments.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>External Reporting</h4>
+                        <p>Report incidents to police or centre security when required, coordinating multi-agency responses.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Working with IOC</h3>
+                
+                <div class="checklist">
+                    <h4>IOC Collaboration Standards</h4>
+                    <div class="checklist-item">IOC operators can assist with obtaining CCTV footage - Tag @team: RSS/IOC in Auror</div>
+                    <div class="checklist-item">IOC provides real-time support during incidents with analysis and guidance</div>
+                    <div class="checklist-item">IOC can brief RSS officers prior to shifts on known offenders and current hotspots</div>
+                    <div class="checklist-item">RSS acknowledges IOC support but maintains ground authority for immediate decisions</div>
+                    <div class="checklist-item">IOC provides intelligence updates and pattern analysis to inform field operations</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>IOC-RSS Operational Coordination Framework</h3>
+                
+                <div class="key-info">
+                    <h4>Integrated Response Model</h4>
+                    <p>RSS officers operate within a coordinated response model where IOC provides remote oversight and RSS provides field response. <strong>Clear role definition prevents duplication of effort and ensures comprehensive incident management.</strong> Success depends on understanding when IOC leads, when RSS leads, and when coordination is required.</p>
+                </div>
+
+                <div class="danger-box">
+                    <h4>Core Operational Principle</h4>
+                    <p><strong>Whoever spots the incident/offender determines the primary responsibility pathway, but both IOC and RSS have specific, non-negotiable duties regardless of who identifies the situation.</strong></p>
+                </div>
+
+                <h4>DETAILED RESPONSIBILITY MATRIX</h4>
+
+                <div class="content-grid">
+                    <div class="success-box">
+                        <h4>IOC Always Responsible For:</h4>
+                        <ul style="margin: 15px 0 15px 20px;">
+                            <li><strong>CCTV Excellence:</strong> Obtain complete CCTV footage with proper timestamps and clear incident visibility</li>
+                            <li><strong>Auror Leadership:</strong> Create Auror events when IOC identifies incidents through monitoring</li>
+                            <li><strong>Statement Authority:</strong> Generate formal statements when IOC reviews footage</li>
+                            <li><strong>Emergency Coordination:</strong> Lead emergency services notification when operating</li>
+                            <li><strong>Intelligence Analysis:</strong> Provide pattern analysis and offender identification support</li>
+                            <li><strong>Technology Integration:</strong> Coordinate technology alert responses and triage</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4>RSS Always Responsible For:</h4>
+                        <ul style="margin: 15px 0 15px 20px;">
+                            <li><strong>Field Operations:</strong> All ground-level incident response and management</li>
+                            <li><strong>Police Interface:</strong> Final responsibility for police reporting once evidence packages complete</li>
+                            <li><strong>Physical Evidence:</strong> Collection of training receipts, product photos, and tangible evidence</li>
+                            <li><strong>Auror Creation:</strong> Create comprehensive Auror events when RSS identifies incidents</li>
+                            <li><strong>Statement Generation:</strong> Write formal statements when directly involved in incidents</li>
+                            <li><strong>External Relations:</strong> Centre security notifications and stakeholder management</li>
+                            <li><strong>Emergency Response:</strong> Call 000 immediately when working solo in emergency situations</li>
+                        </ul>
+                    </div>
+
+                    <div class="key-info">
+                        <h4>Shared Critical Responsibilities:</h4>
+                        <ul style="margin: 15px 0 15px 20px;">
+                            <li><strong>Quality Documentation:</strong> Both ensure Auror events are comprehensive and accurate</li>
+                            <li><strong>Evidence Compilation:</strong> Coordinate to create complete evidence packages</li>
+                            <li><strong>Communication Excellence:</strong> Use proper tagging and notification protocols</li>
+                            <li><strong>Threshold Compliance:</strong> Ensure police reporting meets established criteria</li>
+                            <li><strong>Safety Priority:</strong> Always prioritise safety over documentation requirements</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4>COORDINATION PROTOCOLS BY SCENARIO</h4>
+
+                <div class="procedure-steps">
+                    <div class="step">
+                        <div class="step-number">1A</div>
+                        <div class="step-content">
+                            <h4>RSS Spots Incident - Standard Coordination</h4>
+                            <p><strong>RSS Immediate Actions:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>Create detailed Auror event with "IOC" tag in comments</li>
+                                <li>Radio IOC with incident details and request CCTV support</li>
+                                <li>Collect training receipts and photograph evidence</li>
+                                <li>Generate statement as directly involved officer</li>
+                            </ul>
+                            <p><strong>IOC Response Protocol:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>Acknowledge RSS radio communication and confirm CCTV availability</li>
+                                <li>Extract relevant CCTV footage and provide to RSS</li>
+                                <li>Review Auror event and add supplementary details if required</li>
+                                <li>Support RSS with intelligence checks and pattern analysis</li>
+                            </ul>
+                            <p><strong>Completion Requirements:</strong> RSS compiles complete evidence package and handles police reporting</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">1B</div>
+                        <div class="step-content">
+                            <h4>IOC Spots Incident - Reverse Coordination</h4>
+                            <p><strong>IOC Immediate Actions:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>Create comprehensive Auror event with all available details</li>
+                                <li>Radio RSS with incident location and offender description</li>
+                                <li>Extract and secure CCTV footage immediately</li>
+                                <li>Generate formal statement as person who reviewed footage</li>
+                            </ul>
+                            <p><strong>RSS Response Protocol:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>Respond to IOC radio direction and assess field situation</li>
+                                <li>Collect training receipts and document physical evidence</li>
+                                <li>Update Auror event with field observations and evidence</li>
+                                <li>Coordinate with IOC on evidence package completion</li>
+                            </ul>
+                            <p><strong>Completion Requirements:</strong> RSS handles police reporting using IOC-compiled evidence</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Store Team Spots Incident - Collaborative Response</h4>
+                            <p><strong>Store Team Initial Actions:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>Create basic Auror event with "IOC" tag AND RSS name in comments</li>
+                                <li>Immediately notify RSS officer and/or IOC of incident</li>
+                                <li>Secure immediate physical evidence if safe to do so</li>
+                            </ul>
+                            <p><strong>IOC/RSS Collaborative Response:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>Whoever is available to review CCTV takes lead on footage and statement</li>
+                                <li>RSS collects field evidence and updates Auror with physical details</li>
+                                <li>Coordinate evidence compilation between remote and field teams</li>
+                            </ul>
+                            <p><strong>Completion Requirements:</strong> RSS maintains police reporting responsibility regardless of who leads evidence compilation</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Emergency Situations - Priority Protocols</h4>
+                            <p><strong>Safety-First Principle:</strong> Emergency services notification takes absolute priority over coordination protocols</p>
+                            <p><strong>If IOC Operating:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>IOC coordinates emergency services and centre security notifications</li>
+                                <li>RSS focuses on field safety and immediate incident management</li>
+                                <li>Evidence collection occurs only after safety is completely secured</li>
+                            </ul>
+                            <p><strong>If RSS Working Solo:</strong></p>
+                            <ul style="margin: 10px 0 10px 20px;">
+                                <li>RSS calls 000 immediately and manages emergency response</li>
+                                <li>Documentation and evidence coordination can wait for safety resolution</li>
+                                <li>Post-incident evidence compilation follows normal protocols</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>Communication Excellence Requirements</h4>
+                    <p><strong>Radio Communication Standards:</strong></p>
+                    <ul style="margin: 15px 0 15px 25px;">
+                        <li>All incidents require immediate radio notification between IOC and RSS</li>
+                        <li>Use clear, concise language with specific location and threat level information</li>
+                        <li>Acknowledge all communications to confirm receipt and understanding</li>
+                        <li>Provide regular updates during active incident management</li>
+                    </ul>
+                    <p><strong>Auror Tagging Precision:</strong></p>
+                    <ul style="margin: 15px 0 15px 25px;">
+                        <li>RSS-identified incidents: Always tag "IOC" group in comments</li>
+                        <li>Store-identified incidents: Tag "IOC" AND include RSS officer name</li>
+                        <li>IOC-identified incidents: No additional tagging required</li>
+                        <li>Emergency incidents: Include emergency classification in tags</li>
+                    </ul>
+                </div>
+
+                <div class="success-box">
+                    <h4>Performance Excellence Indicators</h4>
+                    <p><strong>Successful IOC-RSS coordination demonstrates:</strong></p>
+                    <ul style="margin: 15px 0 15px 25px;">
+                        <li>Complete evidence packages with CCTV, receipts, and statements</li>
+                        <li>Proper Auror tagging enabling seamless handovers</li>
+                        <li>Timely police reporting within established thresholds</li>
+                        <li>Effective emergency response with appropriate service coordination</li>
+                        <li>Quality intelligence sharing supporting pattern recognition</li>
+                        <li>Professional external stakeholder communication</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Technology Integration with IOC</h3>
+                
+                <div class="key-info">
+                    <h4>Coordinated Technology Response</h4>
+                    <p>IOC monitors and coordinates response to multiple technology systems, providing comprehensive coverage and prioritised response protocols.</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>Wrong Way Detection</h4>
+                        <p>Camera analytics tracking wrong way exit through entry gates with IOC monitoring and alert coordination.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Weighted Shelves</h4>
+                        <p>Weight-based technology detecting and deterring theft with IOC alert management and response coordination.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Veesion</h4>
+                        <p>Computer vision detecting potential theft down aisles with IOC analysis and triage of alerts.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Move Alert</h4>
+                        <p>Infra-red technology above high-risk areas with IOC monitoring and response coordination.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Motorola WAVE System Communication</h3>
+                
+                <div class="warning-box">
+                    <h4>System Availability</h4>
+                    <p><strong>Note:</strong> Motorola WAVE system is only available where IOC support exists. RSS officers communicate with the IOC using Motorola WAVE PTX Push To Talk system connecting desktop in IOC to handheld radio/key fob for RSS operators.</p>
+                </div>
+
+                <div class="key-info">
+                    <h4>Standard Radio Protocol - CLEAR, CONCISE & CALM</h4>
+                    <p>All radio communications must follow professional protocols to ensure effective coordination and maintain operational security.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Basic Radio Procedures</h3>
+                
+                <div class="procedure-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Shift Commencement Check</h4>
+                            <p>First step when commencing shift: call BASE (the IOC) and check communications are working properly.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Proper Identification</h4>
+                            <p>Always state your store name first - if working at Highpoint: "Highpoint to Base" for clear identification.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Response Protocol</h4>
+                            <p>Base will respond: "Base copies, go ahead" - wait for this acknowledgment before continuing.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Acknowledgment Requirements</h4>
+                            <p>Every call needs acknowledgment: "Base copies" or "Highpoint copies" to confirm message received.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Communication Discipline</h4>
+                            <p>Two people cannot talk at same time - do NOT hog radio waves. Wait for acknowledgment before continuing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Radio Call Structure</h3>
+                
+                <div class="checklist">
+                    <h4>Precise Communication Requirements</h4>
+                    <div class="checklist-item">What do you see - specific, factual observations</div>
+                    <div class="checklist-item">WHY is it important - threat level and urgency</div>
+                    <div class="checklist-item">Where are they NOW - exact location in store</div>
+                    <div class="checklist-item">What direction are they headed - movement patterns</div>
+                    <div class="checklist-item">Are you maintaining visual - current surveillance status</div>
+                    <div class="checklist-item">Do you need someone to take the BAY - backup requirements</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Radio Communication Key Terms</h3>
+                
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>Base</h4>
+                        <p>The IOC - Intelligence Operations Centre providing support and coordination.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>Your Store</h4>
+                        <p>Your call sign - use store name for identification (e.g., "Highpoint to Base").</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>"The Bay"</h4>
+                        <p>When you have visual on subject - maintaining direct observation.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>"Out of Work"</h4>
+                        <p>When you don't have visual - lost sight of subject or person of interest.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>"Holding"</h4>
+                        <p>When stationed somewhere - maintaining position for observation or deterrence.</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>"Copy"</h4>
+                        <p>Acknowledgment - "Base copies" or "Highpoint copies" to confirm message received.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Authority Structure</h3>
+                
+                <div class="key-info">
+                    <h4>Decision-Making Hierarchy</h4>
+                    <ul style="margin: 15px 0 15px 25px;">
+                        <li><strong>IOC:</strong> The overarching support mechanism providing intelligence and guidance</li>
+                        <li><strong>RSS Personnel:</strong> Have final call on actions as ground staff with immediate situation awareness</li>
+                        <li><strong>Ground Priority:</strong> RSS must acknowledge IOC advice, but ground takes priority for immediate reaction</li>
+                        <li><strong>IOC Advisory Role:</strong> IOC will provide radio advice and situational awareness but not override ground decisions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Stakeholder Engagement</h3>
+                
+                <div class="warning-box">
+                    <h4>Key Relationship Management</h4>
+                    <p>RSS officers must build and maintain professional relationships with multiple stakeholders to ensure effective security operations and incident response.</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>Store Management Team</h4>
+                        <ul style="margin: 10px 0 10px 15px;">
+                            <li>Report to on-duty manager at shift start/end</li>
+                            <li>Discuss daily priorities and recent incidents</li>
+                            <li>Coordinate on high-risk periods and known offenders</li>
+                            <li>Assist with internal investigations when required</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <h4>Local Police</h4>
+                        <ul style="margin: 10px 0 10px 15px;">
+                            <li>Establish relationships with local stations</li>
+                            <li>Serve as primary store contact for loss-related incidents</li>
+                            <li>Attend police station when required for statements/evidence</li>
+                            <li>Maintain database of contact information</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <h4>Centre Management and Security</h4>
+                        <ul style="margin: 10px 0 10px 15px;">
+                            <li>Introduce yourself and obtain contact numbers</li>
+                            <li>Coordinate on high-harm offenders</li>
+                            <li>Share intelligence on known threats</li>
+                            <li>Assist with trespass notice enforcement</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <h4>IOC and Security Teams</h4>
+                        <ul style="margin: 10px 0 10px 15px;">
+                            <li>Maintain radio contact throughout shift</li>
+                            <li>Acknowledge IOC guidance while maintaining ground authority</li>
+                            <li>Coordinate responses to technology alerts</li>
+                            <li>Share intelligence on offender patterns</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Communication Standards</h3>
+                
+                <div class="checklist">
+                    <h4>Professional Communication Requirements</h4>
+                    <div class="checklist-item">Always professional and work-related communications only</div>
+                    <div class="checklist-item">No fraternising with team members or customers under any circumstances</div>
+                    <div class="checklist-item">Maintain confidentiality of all security operations and intelligence</div>
+                    <div class="checklist-item">Report relationship issues to management immediately</div>
+                    <div class="checklist-item">Respect chain of command in all communications</div>
+                    <div class="checklist-item">Maintain professional tone in all written and verbal communications</div>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <h3>Knowledge Check - Complete to Continue</h3>
+                <div class="question">
+                    <h4>1. Which stakeholders must RSS officers build professional relationships with? (Select all that apply)</h4>
+                    <ul class="options">
+                        <li><input type="checkbox" name="q7_1" value="a"> Store Management Team</li>
+                        <li><input type="checkbox" name="q7_1" value="b"> Local Police</li>
+                        <li><input type="checkbox" name="q7_1" value="c"> Centre Management and Security</li>
+                        <li><input type="checkbox" name="q7_1" value="d"> Social media influencers</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <h4>2. What is the primary purpose of the Intelligence Operations Centre (IOC)?</h4>
+                    <ul class="options">
+                        <li><input type="radio" name="q7_2" value="a"> To manage store inventory and pricing</li>
+                        <li><input type="radio" name="q7_2" value="b"> To bridge the gap between store loss technologies, onsite security presence and intelligence</li>
+                        <li><input type="radio" name="q7_2" value="c"> To handle customer complaints and refunds</li>
+                        <li><input type="radio" name="q7_2" value="d"> To coordinate staff scheduling across stores</li>
+                    </ul>
+                </div>
+                <div class="quiz-feedback" id="quiz7-feedback"></div>
+                <button class="btn" onclick="checkQuiz7()">Check Answers</button>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="showModule('reporting')">Previous: Reporting & Documentation</button>
+                <button class="btn" id="next7" onclick="showModule('procedures')" disabled style="opacity: 0.5;">Next: Emergency Procedures</button>
+            </div>
+        </div>
+
+        <!-- Module 8: Emergency Procedures & Escalation -->
+        <div class="module-content" id="procedures">
+            <h2>Emergency Procedures & Escalation</h2>
+
+            <div class="section">
+                <h3>Critical Incident Escalation</h3>
+                
+                <div class="danger-box">
+                    <h4>Contact Hierarchy</h4>
+                    <p>Follow this escalation hierarchy for all critical incidents:</p>
+                    <ol style="margin: 15px 0 15px 25px;">
+                        <li><strong>Your supervisor / Line Manager / NOC</strong></li>
+                        <li><strong>Store Management</strong></li>
+                        <li><strong>MA National Operations Centre</strong></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Incidents Requiring Immediate Escalation</h3>
+                
+                <div class="content-grid">
+                    <div class="danger-box">
+                        <h4>Personal Safety Incidents</h4>
+                        <ul style="margin: 10px 0 10px 20px;">
+                            <li><strong>Assault on you</strong> (regardless of severity)</li>
+                            <li><strong>Physical violence</strong> (on you or others including staff and customers)</li>
+                            <li><strong>Weapon use or threats</strong> against any person</li>
+                            <li><strong>Serious verbal aggression or abuse</strong> directed at personnel</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <h4>Criminal Incidents</h4>
+                        <ul style="margin: 10px 0 10px 20px;">
+                            <li><strong>Robbery / Hold Up</strong> of store or customers</li>
+                            <li><strong>Serious theft incidents</strong> over reporting thresholds</li>
+                            <li><strong>Organised retail crime</strong> activities</li>
+                            <li><strong>Known high-harm offenders</strong> on premises</li>
+                        </ul>
+                    </div>
+                    <div class="danger-box">
+                        <h4>Emergency Situations</h4>
+                        <ul style="margin: 10px 0 10px 20px;">
+                            <li><strong>Fire</strong> or smoke detection</li>
+                            <li><strong>Medical emergency</strong> requiring immediate attention</li>
+                            <li><strong>Structural emergencies</strong> (flooding, electrical issues)</li>
+                            <li><strong>Customer altercations</strong> or fights</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Escalation Process</h3>
+                
+                <div class="procedure-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Immediate Notification</h4>
+                            <p>Notify your supervisor or NOC of the occurrence and provide relevant information immediately. Do not delay reporting.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Follow Directions</h4>
+                            <p>Act in accordance with supervisor's directions regarding required actions. Await guidance before taking independent action.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Document Everything</h4>
+                            <p>Submit incident report or statement with comprehensive details. Use Who, What, When, Why, Where and How framework.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Support Operations</h4>
+                            <p>Assist Coles team members as directed by management and coordinate with emergency services if required.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Gather Additional Information</h4>
+                            <p>Collect witness statements, evidence, and any additional information as required by supervisors or authorities.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Documentation Requirements for Critical Incidents</h3>
+                
+                <div class="checklist">
+                    <h4>Comprehensive Documentation Standards</h4>
+                    <div class="checklist-item">Record all incidents in both Auror and TrackTik systems (safety events)</div>
+                    <div class="checklist-item">Use secure notebook for immediate notes if possible</div>
+                    <div class="checklist-item">Capture specific details using Who, What, When, Why, Where and How framework</div>
+                    <div class="checklist-item">Complete formal incident report or statement for Police if necessary</div>
+                    <div class="checklist-item">Submit reports within reasonable timeframe (generally same day as incident)</div>
+                    <div class="checklist-item">Include witness information and contact details when available</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Emergency Codes</h3>
+                
+                <div class="warning-box">
+                    <h4>Coles Emergency Response Codes</h4>
+                    <p>Know and respond appropriately to Coles emergency codes. These codes are used throughout the store for coordinated emergency response.</p>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Meaning</th>
+                            <th>Response Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>CODE ORANGE</strong></td>
+                            <td>Evacuation Required</td>
+                            <td>Evacuate store immediately and assist management with customer evacuation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CODE RED</strong></td>
+                            <td>Standby for Evacuation</td>
+                            <td>Prepare for potential evacuation, await further instructions from management</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CODE BLUE</strong></td>
+                            <td>First Aid Required</td>
+                            <td>First Aid response by trained Coles team member, provide support as needed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CODE ECO</strong></td>
+                            <td>Environmental Emergency</td>
+                            <td>Await specific instructions from Coles Store Wardens</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CODE ALL CLEAR</strong></td>
+                            <td>Emergency Resolved</td>
+                            <td>Emergency cleared, return to normal operations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MR STEED</strong></td>
+                            <td>Management Assistance</td>
+                            <td>Attend service desk immediately and assist management with situation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h3>What Not To Do - Strictly Prohibited Activities</h3>
+                
+                <div class="danger-box">
+                    <h4>Critical Safety Prohibitions</h4>
+                    <p>RSS officers must NOT engage in the following activities under any circumstances:</p>
+                </div>
+
+                <div class="procedure-steps">
+                    <div class="step">
+                        <div class="step-number">⌧</div>
+                        <div class="step-content">
+                            <h4>Physical Intervention</h4>
+                            <p>Use physical intervention except when required for the removal of a person where the immediate safety of the store team and customers requires this. Any physical action must be in accordance with relevant laws and legislation.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">⌧</div>
+                        <div class="step-content">
+                            <h4>Physical Apprehension</h4>
+                            <p>Chase, touch, handle, stop, detain, or apprehend suspected shoplifters. MA Services has a strict no physical apprehension policy.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">⌧</div>
+                        <div class="step-content">
+                            <h4>Unauthorised Checking</h4>
+                            <p>Check customers' bags or receipts unless store has correct signage and conditions of entry clearly displayed and legally compliant.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">⌧</div>
+                        <div class="step-content">
+                            <h4>Customer Banning</h4>
+                            <p>Issue verbal bans or trespass notices. Only Store Manager can issue trespass notices per Coles Trespass Notice procedure.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">⌧</div>
+                        <div class="step-content">
+                            <h4>Security Protocols</h4>
+                            <p>Take possession of store keys, passwords, or PIN codes without explicit management permission and documented authorisation.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">⌧</div>
+                        <div class="step-content">
+                            <h4>Weapons/Restraints</h4>
+                            <p>Carry weapons or restraining devices including batons, handcuffs, ties, or any other restraint equipment.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">⌧</div>
+                        <div class="step-content">
+                            <h4>Unauthorised Documentation</h4>
+                            <p>Take photos or share electronic/social media content that is Coles property or make public comments about Coles operations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Physical Intervention Guidelines</h3>
+                
+                <div class="danger-box">
+                    <h4>Critical Legal and Safety Clarification</h4>
+                    <p>Physical contact with individuals is generally prohibited to ensure safety and avoid escalation. However, physical intervention may be justified when required for the removal of a person where the immediate safety of store team and customers requires this action.</p>
+                    <p><strong>Important Legal Requirements:</strong></p>
+                    <ul style="margin: 15px 0 15px 25px;">
+                        <li>Any physical action must be in accordance with relevant laws and legislation</li>
+                        <li>Physical intervention should only occur when absolutely necessary for immediate safety</li>
+                        <li>RSS officers must understand their legal authorities and limitations in their jurisdiction</li>
+                        <li>All physical interventions must be immediately reported and documented</li>
+                        <li>When in doubt, prioritise de-escalation and withdrawal while summoning appropriate assistance</li>
+                    </ul>
+                    <p><strong>Remember:</strong> The primary goal is always prevention and de-escalation. Physical intervention carries significant risks and legal implications.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Safety Priority Reminder</h3>
+                
+                <div class="success-box">
+                    <h4>Fundamental Safety Principle</h4>
+                    <p><strong>Your safety and the safety of others is of paramount importance.</strong><br>Always prioritise de-escalation and follow proper escalation procedures. When in doubt, withdraw from dangerous situations and seek immediate assistance through proper channels.</p>
+                </div>
+
+                <div class="key-info">
+                    <h4>Confidentiality Notice</h4>
+                    <p>This document contains confidential and proprietary information. Distribution is restricted to authorised personnel only. Maintain the security and confidentiality of all training materials and operational procedures.</p>
+                </div>
+            </div>
+
+            <div class="quiz-section">
+                <h3>Knowledge Check - Complete to Continue</h3>
+                <div class="question">
+                    <h4>1. What does CODE ORANGE mean?</h4>
+                    <ul class="options">
+                        <li><input type="radio" name="q8_1" value="a"> Standby for evacuation</li>
+                        <li><input type="radio" name="q8_1" value="b"> Evacuate store and assist management</li>
+                        <li><input type="radio" name="q8_1" value="c"> First aid required</li>
+                        <li><input type="radio" name="q8_1" value="d"> Emergency cleared</li>
+                    </ul>
+                </div>
+                <div class="question">
+                    <h4>2. Which activities are strictly prohibited for RSS officers? (Select all that apply)</h4>
+                    <ul class="options">
+                        <li><input type="checkbox" name="q8_2" value="a"> Physical apprehension of suspects</li>
+                        <li><input type="checkbox" name="q8_2" value="b"> Issuing verbal bans or trespass notices</li>
+                        <li><input type="checkbox" name="q8_2" value="c"> Carrying weapons or restraining devices</li>
+                        <li><input type="checkbox" name="q8_2" value="d"> Reporting incidents to police</li>
+                    </ul>
+                </div>
+                <div class="quiz-feedback" id="quiz8-feedback"></div>
+                <button class="btn" onclick="checkQuiz8()">Check Answers</button>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="showModule('communication')">Previous: Communication & IOC</button>
+                <button class="btn btn-secondary" onclick="showModule('moduleNavigation')">Back to Menu</button>
+            </div>
+        </div>
+
+        <!-- Completion Section -->
+        <div class="module-content" id="completion">
+            <h2>Training Completion</h2>
+
+            <div class="success-box">
+                <h4>Congratulations!</h4>
+                <p>You have successfully completed all RSS Training modules. You have demonstrated comprehensive understanding of:</p>
+                <ul style="margin: 15px 0 15px 25px;">
+                    <li>RSS role and responsibilities including team safety</li>
+                    <li>Shift management and professional standards</li>
+                    <li>Customer engagement and de-escalation techniques</li>
+                    <li>Technology systems and loss prevention methods</li>
+                    <li>Reporting procedures and Auror documentation</li>
+                    <li>Communication protocols and stakeholder engagement</li>
+                    <li>Emergency procedures and safety requirements</li>
+                </ul>
+            </div>
+
+            <div class="key-info">
+                <h4>Final Step - Official Completion Record</h4>
+                <p>To receive official recognition of your training completion and for MA Services Group records, you must complete the official completion form.</p>
+                <p><strong>Required Information:</strong></p>
+                <ul style="margin: 10px 0 10px 20px;">
+                    <li>Full Name</li>
+                    <li>Employee ID</li>
+                    <li>Today's Date</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin: 40px 0;">
+                <a href="https://forms.office.com/r/EFFk6ktw2J" target="_blank" class="btn" style="font-size: 18px; padding: 20px 40px; background: linear-gradient(135deg, #00A4BD, #0288a3);">
+                    Complete Official Training Record
+                </a>
+                <p style="margin: 20px 0; color: #666;">Click above to open the completion form in a new window</p>
+            </div>
+
+            <div class="warning-box">
+                <h4>Important Reminder</h4>
+                <p>Your training is not officially complete until you submit the completion form above. This ensures MA Services Group has a proper record of your successful completion of the RSS Training program.</p>
+                <p><strong>Keep this page open</strong> while completing the form in case you need to reference any training content.</p>
+            </div>
+
+            <div class="navigation" style="justify-content: center;">
+                <button class="btn btn-secondary" onclick="showModule('moduleNavigation')">Return to Training Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Show specific module
+        function showModule(moduleId) {
+            // Hide all modules
+            document.querySelectorAll('.module-content').forEach(module => {
+                module.classList.remove('active');
+            });
+            
+            // Hide navigation if showing a module
+            if (moduleId !== 'moduleNavigation') {
+                document.getElementById('moduleNavigation').style.display = 'none';
+                document.getElementById(moduleId).classList.add('active');
+                
+                // Scroll to top of module
+                document.getElementById(moduleId).scrollIntoView({ behavior: 'smooth' });
+            } else {
+                document.getElementById('moduleNavigation').style.display = 'grid';
+                // Scroll to top of page
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Module completion tracking (simplified version)
+        function markAsRead(moduleId) {
+            const readModules = JSON.parse(localStorage.getItem('rssReadModules') || '[]');
+            if (!readModules.includes(moduleId)) {
+                readModules.push(moduleId);
+                localStorage.setItem('rssReadModules', JSON.stringify(readModules));
+            }
+        }
+
+        // Auto-mark module as read when scrolled to bottom
+        function handleScroll() {
+            const activeModule = document.querySelector('.module-content.active');
+            if (activeModule) {
+                const moduleHeight = activeModule.scrollHeight;
+                const scrollPosition = window.scrollY + window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+                
+                // If scrolled near bottom of module
+                if (scrollPosition >= documentHeight - 100) {
+                    markAsRead(activeModule.id);
+                }
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll);
+
+        // Quiz validation functions
+        function checkQuiz1() {
+            const q1 = document.querySelector('input[name="q1_1"]:checked');
+            const q2Answers = document.querySelectorAll('input[name="q1_2"]:checked');
+            const feedback = document.getElementById('quiz1-feedback');
+            const nextBtn = document.getElementById('next1');
+            
+            let score = 0;
+            let feedbackText = '';
+            
+            if (q1 && q1.value === 'b') {
+                score++;
+            } else {
+                feedbackText += '❌ Question 1: The RSS role is for managing crime-related loss and assisting with providing a safe environment for team members.\n';
+            }
+            
+            const correctQ2 = ['a', 'b', 'c'];
+            const selectedQ2 = Array.from(q2Answers).map(cb => cb.value);
+            if (correctQ2.every(val => selectedQ2.includes(val)) && selectedQ2.length === 3 && !selectedQ2.includes('d')) {
+                score++;
+            } else {
+                feedbackText += '❌ Question 2: RSS works with IOC, Centre Security & Management, and local police.\n';
+            }
+            
+            if (score === 2) {
+                feedback.className = 'quiz-feedback success';
+                feedback.textContent = '✅ Excellent! All answers correct. You may proceed to the next module.';
+                nextBtn.disabled = false;
+                nextBtn.style.opacity = '1';
+            } else {
+                feedback.className = 'quiz-feedback error';
+                feedback.textContent = feedbackText + '\nPlease review the material and try again.';
+                nextBtn.disabled = true;
+                nextBtn.style.opacity = '0.5';
+            }
+        }
+
+        function checkQuiz2() {
+            const q1Answers = document.querySelectorAll('input[name="q2_1"]:checked');
+            const q2Answers = document.querySelectorAll('input[name="q2_2"]:checked');
+            const feedback = document.getElementById('quiz2-feedback');
+            const nextBtn = document.getElementById('next2');
+            
+            let score = 0;
+            let feedbackText = '';
+            
+            const correctQ1 = ['a', 'b', 'c'];
+            const selectedQ1 = Array.from(q1Answers).map(cb => cb.value);
+            if (correctQ1.every(val => selectedQ1.includes(val)) && selectedQ1.length === 3 && !selectedQ1.includes('d')) {
+                score++;
+            } else {
+                feedbackText += '❌ Question 1: Essential shift start steps are: sign in to systems, collect equipment, and perform radio check.\n';
+            }
+            
+            const correctQ2 = ['a', 'b'];
+            const selectedQ2 = Array.from(q2Answers).map(cb => cb.value);
+            if (correctQ2.every(val => selectedQ2.includes(val)) && selectedQ2.length === 2) {
+                score++;
+            } else {
+                feedbackText += '❌ Question 2: You need current Coles Induction Card and security licence.\n';
+            }
+            
+            if (score === 2) {
+                feedback.className = 'quiz-feedback success';
+                feedback.textContent = '✅ Excellent! All answers correct. You may proceed to the next module.';
+                nextBtn.disabled = false;
+                nextBtn.style.opacity = '1';
+            } else {
+                feedback.className = 'quiz-feedback error';
+                feedback.textContent = feedbackText + '\nPlease review the material and try again.';
+                nextBtn.disabled = true;
+                nextBtn.style.opacity = '0.5';
+            }
+        }
+
+        function checkQuiz3() {
+            const q1 = document.querySelector('input[name="q3_1"]:checked');
+            const q2Answers = document.querySelectorAll('input[name="q3_2"]:checked');
+            const feedback = document.getElementById('quiz3-feedback');
+            const nextBtn = document.getElementById('next3');
+            
+            let score = 0;
+            let feedbackText = '';
+            
+            if (q1 && q1.value === 'b') {
+                score++;
+            } else {
+                feedbackText += '❌ Question 1: MASG has a strict NO FRATERNISATION policy.\n';
+            }
+            
+            const correctQ2 = ['a', 'b', 'c'];
+            const selectedQ2 = Array.from(q2Answers).map(cb => cb.value);
+            if (correctQ2.every(val => selectedQ2.includes(val)) && selectedQ2.length === 3 && !selectedQ2.includes('d')) {
+                score++;
+            } else {
+                feedbackText += '❌ Question 2: Personal phone use, physical touching, and leaning on gates are prohibited.\n';
+            }
+            
+            if (score === 2) {
+                feedback.className = 'quiz-feedback success';
+                feedback.textContent = '✅ Excellent! All answers correct. You may proceed to the next module.';
+                nextBtn.disabled = false;
+                nextBtn.style.opacity = '1';
+            } else {
+                feedback.className = 'quiz-feedback error';
+                feedback.textContent = feedbackText + '\nPlease review the material and try again.';
+                nextBtn.disabled = true;
+                nextBtn.style.opacity = '0.5';
+            }
+        }
+
+        function checkQuiz4() {
+            const q1 = document.querySelector('input[name="q4_1"]:checked');
+            const q2 = document.querySelector('input[name="q4_2"]:checked');
+            const feedback = document.getElementById('quiz4-feedback');
+            const nextBtn = document.getElementById('next4');
+            
+            let score = 0;
+            let feedbackText = '';
+            
+            if (q1 && q1.value === 'c') {
+                score++;
+            } else {
+                feedbackText += '❌ Question 1: Never chase customers or shoplifters.\n';
+            }
+            
+            if (q2 && q2.value === 'c') {
+                score++;
+            } else {
+                feedbackText += '❌ Question 2: In DETER, engage other customers first where possible, then the person of interest.\n';
+            }
+            
+            if (score === 2) {
+                feedback.className = 'quiz-feedback success';
+                feedback.textContent = '✅ Excellent! All answers correct. You may proceed to the next module.';
+                nextBtn.disabled = false;
+                nextBtn.style.opacity = '1';
+            } else {
+                feedback.className = 'quiz-feedback error';
+                feedback.textContent = feedbackText + '\nPlease review the material and try again.';
+                nextBtn.disabled = true;
+                nextBtn.style.opacity = '0.5';
+            }
+        }
+
+        function checkQuiz5() {
+            const q1 = document.querySelector('input[name="q5_1"]:checked');
+            const q2Answers = document.querySelectorAll('input[name="q5_2"]:checked');
+            const feedback = document.getElementById('quiz5-feedback');
+            const nextBtn = document.getElementById('next5');
+            
+            let score = 0;
+            let feedbackText = '';
+            
+            if (q1 && q1.value === 'c') {
+                score++;
+            } else {
+                feedbackText += '❌ Question 1: EAS activation is NOT proof of theft.\n';
+            }
+            
+            const correctQ2 = ['a', 'b', 'c'];
+            const selectedQ2 = Array.from(q2Answers).map(cb => cb.value);
+            if (correctQ2.every(val => selectedQ2.includes(val)) && selectedQ2.length === 3 && !selectedQ2.includes('d')) {
+                score++;
+            } else {
+                feedbackText += '❌ Question 2: Primary high-risk items include baby formula, razor blades, and meat products.\n';
+            }
+            
+            if (score === 2) {
+                feedback.className = 'quiz-feedback success';
+                feedback.textContent = '✅ Excellent! All answers correct. You may proceed to the next module.';
+                nextBtn.disabled = false;
+                nextBtn.style.opacity = '1';
+            } else {
+                feedback.className = 'quiz-feedback error';
+                feedback.textContent = feedbackText + '\nPlease review the material and try again.';
+                nextBtn.disabled = true;
+                nextBtn.style.opacity = '0.5';
+            }
+        }
+
+        function checkQuiz6() {
+            const q1Answers = document.querySelectorAll('input[name="q6_1"]:checked');
+            const q2 = document.querySelector('input[name="q6_2"]:checked');
+            const q3Answers = document.querySelectorAll('input[name="q6_3"]:checked');
+            const q4 = document.querySelector('input[name="q6_4"]:checked');
+            const feedback = document.getElementById('quiz6-feedback');
+            const nextBtn = document.getElementById('next6');
+            
+            let score = 0;
+            let feedbackText = '';
+            
+            const correctQ1 = ['a', 'b', 'c'];
+            const selectedQ1 = Array.from(q1Answers).map(cb => cb.value);
+            if (correctQ1.every(val => selectedQ1.includes(val)) && selectedQ1.length === 3 && !selectedQ1.includes('d')) {
+                score++;
+            } else {
+                feedbackText += '❌ Question 1: Events that must be reported to police include: theft events $500+, known recidivist offenders, and threatening/violent behaviour.\n';
+            }
+            
+            if (q2 && q2.value === 'b') {
+                score++;
+            } else {
+                feedbackText += '❌ Question 2: NOC phone number is 1300 02 04 06.\n';
+            }
+
+            const correctQ3 = ['a', 'b', 'c'];
+            const selectedQ3 = Array.from(q3Answers).map(cb => cb.value);
+            if (correctQ3.every(val => selectedQ3.includes(val)) && selectedQ3.length === 3 && !selectedQ3.includes('d')) {
+                score++;
+            } else {
+                feedbackText += '❌ Question 3: All retail crime events must be reported: theft incidents, prevention activities, and aggressive behaviour/disorderly conduct.\n';
+            }
+
+            if (q4 && q4.value === 'b') {
+                score++;
+            } else {
+                feedbackText += '❌ Question 4: RSS role success is directly measured from Auror reports.\n';
+            }
+            
+            if (score === 4) {
+                feedback.className = 'quiz-feedback success';
+                feedback.textContent = '✅ Excellent! All answers correct. You may proceed to the next module.';
+                nextBtn.disabled = false;
+                nextBtn.style.opacity = '1';
+            } else {
+                feedback.className = 'quiz-feedback error';
+                feedback.textContent = feedbackText + '\nPlease review the material and try again.';
+                nextBtn.disabled = true;
+                nextBtn.style.opacity = '0.5';
+            }
+        }
+
+        function checkQuiz7() {
+            const q1Answers = document.querySelectorAll('input[name="q7_1"]:checked');
+            const q2 = document.querySelector('input[name="q7_2"]:checked');
+            const feedback = document.getElementById('quiz7-feedback');
+            const nextBtn = document.getElementById('next7');
+            
+            let score = 0;
+            let feedbackText = '';
+            
+            const correctQ1 = ['a', 'b', 'c'];
+            const selectedQ1 = Array.from(q1Answers).map(cb => cb.value);
+            if (correctQ1.every(val => selectedQ1.includes(val)) && selectedQ1.length === 3 && !selectedQ1.includes('d')) {
+                score++;
+            } else {
+                feedbackText += '❌ Question 1: RSS must build relationships with Store Management Team, Local Police, and Centre Management and Security.\n';
+            }
+            
+            if (q2 && q2.value === 'b') {
+                score++;
+            } else {
+                feedbackText += '❌ Question 2: IOC bridges the gap between store loss technologies, onsite security presence and intelligence.\n';
+            }
+            
+            if (score === 2) {
+                feedback.className = 'quiz-feedback success';
+                feedback.textContent = '✅ Excellent! All answers correct. You may proceed to the next module.';
+                nextBtn.disabled = false;
+                nextBtn.style.opacity = '1';
+            } else {
+                feedback.className = 'quiz-feedback error';
+                feedback.textContent = feedbackText + '\nPlease review the material and try again.';
+                nextBtn.disabled = true;
+                nextBtn.style.opacity = '0.5';
+            }
+        }
+
+        function checkQuiz8() {
+            const q1 = document.querySelector('input[name="q8_1"]:checked');
+            const q2Answers = document.querySelectorAll('input[name="q8_2"]:checked');
+            const feedback = document.getElementById('quiz8-feedback');
+            
+            let score = 0;
+            let feedbackText = '';
+            
+            if (q1 && q1.value === 'b') {
+                score++;
+            } else {
+                feedbackText += '❌ Question 1: CODE ORANGE means evacuate store and assist management.\n';
+            }
+            
+            const correctQ2 = ['a', 'b', 'c'];
+            const selectedQ2 = Array.from(q2Answers).map(cb => cb.value);
+            if (correctQ2.every(val => selectedQ2.includes(val)) && selectedQ2.length === 3 && !selectedQ2.includes('d')) {
+                score++;
+            } else {
+                feedbackText += '❌ Question 2: Prohibited activities include physical apprehension, issuing bans, and carrying weapons.\n';
+            }
+            
+            if (score === 2) {
+                feedback.className = 'quiz-feedback success';
+                feedback.textContent = '🎉 Congratulations! You have completed all training modules successfully. You now have comprehensive knowledge of RSS procedures and standards.';
+                // Show completion section after final module
+                setTimeout(() => {
+                    showModule('completion');
+                }, 2000);
+            } else {
+                feedback.className = 'quiz-feedback error';
+                feedback.textContent = feedbackText + '\nPlease review the material and try again.';
+            }
+        }
+    </script>
+</body>
+</html>
